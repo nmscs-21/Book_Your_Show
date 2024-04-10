@@ -1,10 +1,14 @@
 import React from "react";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
+import "./Moviecard.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import Signin from "./Signin";
 
 const Navbar = () => {
   return (
     <nav className="navbar bg-body-tertiary d-flex justify-content-between align-items-center">
+      <Signin />
       <Link className="navbar-brand p-2 ms-5" to="/">
         <span
           style={{
@@ -53,7 +57,41 @@ const Navbar = () => {
           Search
         </button>
       </form>
-      <button type="button" className="btn btn-danger me-5">
+
+      <div className="dropdown-center">
+        <button
+          className="btn btn-outline-danger dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Location
+        </button>
+        <ul className="dropdown-menu">
+          <li>
+            <a className="dropdown-item" href="#">
+              Action
+            </a>
+          </li>
+          <li>
+            <a className="dropdown-item" href="#">
+              Another action
+            </a>
+          </li>
+          <li>
+            <a className="dropdown-item" href="#">
+              Something else here
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <button
+        type="button"
+        className="btn btn-danger me-5"
+        data-bs-toggle="modal"
+        data-bs-target="#login"
+      >
         Sign in
       </button>
     </nav>
