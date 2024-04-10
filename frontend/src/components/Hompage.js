@@ -23,14 +23,20 @@ const Hompage = () => {
     <div>
       <h3>Movies</h3>
       <div className="container">
-        {movies.map((movie) => (
+        {/* {movies.map((movie) => (
           <div key={movie.movieId}>
             <MovieCard
               movieName={movie.movieName}
               movieDesc={movie.movieDesc}
             />
           </div>
-        ))}
+        ))} */}
+        <MovieCard movieName="sample" movieDesc="sample" />
+        <MovieCard movieName="sample" movieDesc="sample" />
+        <MovieCard movieName="sample" movieDesc="sample" />
+        <MovieCard movieName="sample" movieDesc="sample" />
+        <MovieCard movieName="sample" movieDesc="sample" />
+        <MovieCard movieName="sample" movieDesc="sample" />
       </div>
     </div>
   );

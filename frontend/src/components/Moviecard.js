@@ -1,17 +1,20 @@
 import React from "react";
 import "./Moviecard.css";
+import { Link } from "react-router-dom";
 
 const MovieCard = ({ movieName, movieDesc }) => {
   return (
-    <div className="card" style={{ width: "18rem" }}>
-      <div className="card-body">
-        <h5 className="card-title">{movieName}</h5>
-        <p className="card-text">{movieDesc}</p>
-        {/* <a href="#" className="btn btn-primary">
+    <Link to="/movie-details" className="card-link">
+      <div className="card" style={{ width: "18rem" }}>
+        <div className="card-body">
+          <h5 className="card-title">{movieName}</h5>
+          <p className="card-text">{movieDesc}</p>
+          {/* <a href="#" className="btn btn-primary">
           Go somewhere
         </a> */}
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
