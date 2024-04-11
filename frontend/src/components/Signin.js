@@ -148,40 +148,6 @@ function Signin() {
                   style={{ marginBottom: "30px" }}
                 >
                   <input
-                    type="password"
-                    className="form-control"
-                    id="floatingPassword"
-                    placeholder="Password"
-                    required
-                    style={{
-                      width: "300px",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <label for="floatingPassword">Password</label>
-                </div>
-                <div
-                  className="form-floating mb-3"
-                  style={{ marginBottom: "30px" }}
-                >
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="floatingInput"
-                    placeholder="Name"
-                    required
-                    style={{
-                      width: "300px",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <label for="floatingInput">Name</label>
-                </div>
-                <div
-                  className="form-floating mb-3"
-                  style={{ marginBottom: "30px" }}
-                >
-                  <input
                     type="tel"
                     id="phone"
                     name="phone"
@@ -212,6 +178,23 @@ function Signin() {
                     }}
                   />
                   <label for="floatingInput">Date</label>
+                </div>
+                <div
+                  className="form-floating mb-3"
+                  style={{ marginBottom: "30px" }}
+                >
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="floatingPassword"
+                    placeholder="Password"
+                    required
+                    style={{
+                      width: "300px",
+                      borderRadius: "10px",
+                    }}
+                  />
+                  <label for="floatingPassword">Password</label>
                 </div>
                 <div>
                   <input
