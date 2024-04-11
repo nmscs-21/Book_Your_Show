@@ -3,9 +3,9 @@ import Slot from "./Slot";
 
 const ScreenCards = ({ screenName, TheatreName, slotTime }) => {
   return (
-    <div class="card mb-3">
-      <div class="row g-0">
-        <div class="col-md-4">
+    <div className="card mb-3">
+      <div className="row g-0">
+        <div className="col-md-4">
           <div
             className="card-body"
             style={{
@@ -16,8 +16,8 @@ const ScreenCards = ({ screenName, TheatreName, slotTime }) => {
             <p className="card-text">{TheatreName}</p>
           </div>
         </div>
-        <div class="col-md-8">
-          <div class="card-body">
+        <div className="col-md-8">
+          <div className="card-body">
             <Slot slotTime="10:00AM" />
             <Slot slotTime="10:00AM" />
             <Slot slotTime="10:00AM" />

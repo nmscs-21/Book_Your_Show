@@ -11,7 +11,7 @@ function Signin() {
         data-bs-keyboard="false"
         aria-hidden="true"
         aria-labelledby="staticBackdropLabel"
-        tabindex="-1"
+        tabIndex="-1"
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
@@ -53,7 +53,7 @@ function Signin() {
                       borderRadius: "10px",
                     }}
                   />
-                  <label for="floatingInput">Username</label>
+                  <label htmlFor="floatingInput">Username</label>
                 </div>
                 <div className="form-floating" style={{ marginBottom: "30px" }}>
                   <input
@@ -67,7 +67,7 @@ function Signin() {
                       borderRadius: "10px",
                     }}
                   />
-                  <label for="floatingPassword">Password</label>
+                  <label htmlFor="floatingPassword">Password</label>
                 </div>
                 <div>
                   <input
@@ -99,7 +99,7 @@ function Signin() {
         id="exampleModalToggle2"
         aria-hidden="true"
         aria-labelledby="exampleModalToggleLabel2"
-        tabindex="-1"
+        tabIndex="-1"
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
@@ -133,7 +133,7 @@ function Signin() {
                   <input
                     type="text"
                     className="form-control"
-                    id="floatingInput"
+                    id="floatingusername"
                     placeholder="Username"
                     required
                     style={{
@@ -141,7 +141,7 @@ function Signin() {
                       borderRadius: "10px",
                     }}
                   />
-                  <label for="floatingInput">Username</label>
+                  <label htmlFor="floatingusername">Username</label>
                 </div>
                 <div
                   className="form-floating mb-3"
@@ -160,7 +160,7 @@ function Signin() {
                       borderRadius: "10px",
                     }}
                   />
-                  <label for="floatingInput">Ph no</label>
+                  <label htmlFor="phone">Ph no</label>
                 </div>
                 <div
                   className="form-floating mb-3"
@@ -177,7 +177,7 @@ function Signin() {
                       borderRadius: "10px",
                     }}
                   />
-                  <label for="floatingInput">Date</label>
+                  <label htmlFor="date">Date</label>
                 </div>
                 <div
                   className="form-floating mb-3"
@@ -186,7 +186,7 @@ function Signin() {
                   <input
                     type="password"
                     className="form-control"
-                    id="floatingPassword"
+                    id="floatingsignuppwd"
                     placeholder="Password"
                     required
                     style={{
@@ -194,7 +194,7 @@ function Signin() {
                       borderRadius: "10px",
                     }}
                   />
-                  <label for="floatingPassword">Password</label>
+                  <label htmlFor="floatingsignuppwd">Password</label>
                 </div>
                 <div>
                   <input

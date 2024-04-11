@@ -23,13 +23,12 @@ const Navbar = () => {
         <span
           style={{
             color: "white",
-            backgroundColor: "#F44336", // Slightly brighter red for better contrast
-            padding: "3px 7px", // Increased padding for a better visual appeal
-            borderRadius: "8px", // Rounded corners
-            boxShadow: "0 3px 6px 0 rgba(0,0,0,0.16)", // Enhanced shadow for depth
+            backgroundColor: "#F44336",
+            padding: "3px 7px",
+            borderRadius: "8px",
+            boxShadow: "0 3px 6px 0 rgba(0,0,0,0.16)",
             margin: "1px",
-            //textTransform: "uppercase", // Capitalize 'YOUR' for emphasis
-            letterSpacing: "1px", // Spacing out letters for a premium look
+            letterSpacing: "1px",
           }}
         >
           Your

@@ -4,7 +4,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 const Reviewcard = ({ username, review }) => {
   return (
     <div
-      class="card"
+      className="card"
       style={{
         flex: "0 0 auto",
         width: "400px",
@@ -13,7 +13,7 @@ const Reviewcard = ({ username, review }) => {
         padding: "10px",
       }}
     >
-      <div class="card-body">
+      <div className="card-body">
         <h4>{username}</h4>
         <p>{review}</p>
       </div>

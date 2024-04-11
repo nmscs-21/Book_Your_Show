@@ -20,7 +20,7 @@ const Footer = () => {
         id="admin"
         data-bs-backdrop="static"
         data-bs-keyboard="false"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
       >
@@ -57,7 +57,7 @@ const Footer = () => {
                     <input
                       type="text"
                       className="form-control"
-                      id="floatingInput"
+                      id="floatinguser"
                       placeholder="Username"
                       required
                       style={{
@@ -65,7 +65,7 @@ const Footer = () => {
                         borderRadius: "10px",
                       }}
                     />
-                    <label for="floatingInput">Username</label>
+                    <label htmlFor="floatinguser">Username</label>
                   </div>
                   <div
                     className="form-floating"
@@ -74,7 +74,7 @@ const Footer = () => {
                     <input
                       type="password"
                       className="form-control"
-                      id="floatingPassword"
+                      id="floatingpwd"
                       placeholder="Password"
                       required
                       style={{
@@ -82,7 +82,7 @@ const Footer = () => {
                         borderRadius: "10px",
                       }}
                     />
-                    <label for="floatingPassword">Password</label>
+                    <label htmlFor="floatingpwd">Password</label>
                   </div>
                   <div>
                     <input

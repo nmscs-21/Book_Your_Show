@@ -20,8 +20,7 @@ const Hompage = () => {
   }, []);
 
   return (
-    <div>
-      <h3>Movies</h3>
+    <div style={{ padding: "30px" }}>
       <div className="container">
         {/* {movies.map((movie) => (
           <div key={movie.movieId}>
@@ -31,6 +30,10 @@ const Hompage = () => {
             />
           </div>
         ))} */}
+        <MovieCard movieName="sample" movieDesc="sample" />
+        <MovieCard movieName="sample" movieDesc="sample" />
+        <MovieCard movieName="sample" movieDesc="sample" />
+        <MovieCard movieName="sample" movieDesc="sample" />
         <MovieCard movieName="sample" movieDesc="sample" />
         <MovieCard movieName="sample" movieDesc="sample" />
         <MovieCard movieName="sample" movieDesc="sample" />
