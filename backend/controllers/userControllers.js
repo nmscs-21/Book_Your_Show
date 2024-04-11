@@ -10,11 +10,12 @@ const registerUser = asyncHandler(async (req, res) => {
   pwd = await bcrypt.hash(pwd, salt);
 
   if (!userName || !dob || !phNo || !pwd) {
-    console.log(userName, dob, phNo, pwd);
+    // console.log(userName, dob, phNo, pwd);
     res.status(400);
     throw new Error("Please Enter all the Feilds");
   }
 
+  // console.log(userName, dob, phNo, pwd);
   // Check if the username already exists
   pool.query(
     "SELECT * FROM Users WHERE userName = ?",
@@ -34,7 +35,7 @@ const registerUser = asyncHandler(async (req, res) => {
       // If the username is not taken, proceed with the insertion
       // Insert into Users table
       pool.query(
-        "INSERT INTO Users (userName, dob, phNo, pwd) VALUES (?,STR_TO_DATE(?, '%d-%m-%Y'),?,?)",
+        "INSERT INTO Users (userName, dob, phNo, pwd) VALUES (?,STR_TO_DATE(?, '%Y-%m-%d'),?,?)",
         [userName, dob, phNo, pwd],
         (err, result) => {
           if (err) {
@@ -81,6 +82,7 @@ const authUser = asyncHandler(async (req, res) => {
 
       if (result.length === 0) {
         res.status(400).send("Invalid Username");
+        console.log("Invalid Username");
         return;
       }
 
@@ -92,6 +94,7 @@ const authUser = asyncHandler(async (req, res) => {
         }
 
         if (passwordMatch) {
+          console.log("signed in");
           res.status(200).json({
             userId: result[0].userId,
             userName,
@@ -101,6 +104,7 @@ const authUser = asyncHandler(async (req, res) => {
           });
         } else {
           res.status(400).send("Invalid Password");
+          console.log("Invalid Password");
         }
       });
     }

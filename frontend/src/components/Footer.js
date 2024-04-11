@@ -1,8 +1,8 @@
 import React from "react";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import Signin from "./Signin";
+// import Signin from "./SignIn";
 
 const Footer = () => {
   return (
@@ -20,7 +20,7 @@ const Footer = () => {
         id="admin"
         data-bs-backdrop="static"
         data-bs-keyboard="false"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
       >
@@ -65,7 +65,7 @@ const Footer = () => {
                         borderRadius: "10px",
                       }}
                     />
-                    <label for="floatingInput">Username</label>
+                    <label htmlFor="floatingInput">Username</label>
                   </div>
                   <div
                     className="form-floating"
@@ -82,7 +82,7 @@ const Footer = () => {
                         borderRadius: "10px",
                       }}
                     />
-                    <label for="floatingPassword">Password</label>
+                    <label htmlFor="floatingPassword">Password</label>
                   </div>
                   <div>
                     <input

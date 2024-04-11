@@ -3,7 +3,8 @@ import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import "./Moviecard.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import Signin from "./Signin";
+import AuthComponent from "./AuthComponent";
+import Signin from "./SignIn";
 
 const Navbar = () => {
   return (
@@ -85,15 +86,7 @@ const Navbar = () => {
           </li>
         </ul>
       </div>
-
-      <button
-        type="button"
-        className="btn btn-danger me-5"
-        data-bs-toggle="modal"
-        data-bs-target="#login"
-      >
-        Sign in
-      </button>
+      <AuthComponent />
     </nav>
   );
 };
