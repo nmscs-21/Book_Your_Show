@@ -4,10 +4,9 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Hompage from "./components/Hompage";
-import Signin from "./components/Signin";
 import Footer from "./components/Footer";
 import Moviedetails from "./components/Moviedetails";
-
+import BuyTickets from "./components/BuyTickets";
 function App() {
   return (
     <div className="App">
@@ -15,6 +14,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Hompage />} />
         <Route exact path="/movie-details" element={<Moviedetails />} />
+        <Route exact path="/buy-tickets" element={<BuyTickets />} />
       </Routes>
       <Footer />
     </div>
