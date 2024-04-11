@@ -1,8 +1,8 @@
 import React from "react";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import Signin from "./Signin";
+// import Signin from "./SignIn";
 
 const Footer = () => {
   return (
@@ -65,7 +65,7 @@ const Footer = () => {
                         borderRadius: "10px",
                       }}
                     />
-                    <label htmlFor="floatinguser">Username</label>
+                    <label htmlFor="floatingInput">Username</label>
                   </div>
                   <div
                     className="form-floating"
@@ -82,7 +82,7 @@ const Footer = () => {
                         borderRadius: "10px",
                       }}
                     />
-                    <label htmlFor="floatingpwd">Password</label>
+                    <label htmlFor="floatingPassword">Password</label>
                   </div>
                   <div>
                     <input

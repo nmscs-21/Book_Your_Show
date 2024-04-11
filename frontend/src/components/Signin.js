@@ -1,5 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import LoginForm from "./LoginForm";
+import SignUpForm from "./SignUpForm";
 
 function Signin() {
   return (
@@ -29,56 +33,7 @@ function Signin() {
                 aria-label="Close"
               ></button>
             </div>
-            <form>
-              <div
-                className="modal-body"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <div
-                  className="form-floating mb-3"
-                  style={{ marginBottom: "30px" }}
-                >
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="floatingInput"
-                    placeholder="Username"
-                    required
-                    style={{
-                      width: "300px",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <label htmlFor="floatingInput">Username</label>
-                </div>
-                <div className="form-floating" style={{ marginBottom: "30px" }}>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="floatingPassword"
-                    placeholder="Password"
-                    required
-                    style={{
-                      width: "300px",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <label htmlFor="floatingPassword">Password</label>
-                </div>
-                <div>
-                  <input
-                    type="submit"
-                    className="btn btn-outline-danger"
-                    id="signinsubmit"
-                    value="Log in"
-                  ></input>
-                </div>
-              </div>
-            </form>
+            <LoginForm />
             <div
               className="modal-footer"
               style={{ display: "flex", justifyContent: "center" }}
@@ -117,95 +72,7 @@ function Signin() {
                 aria-label="Close"
               ></button>
             </div>
-            <form>
-              <div
-                className="modal-body"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <div
-                  className="form-floating mb-3"
-                  style={{ marginBottom: "30px" }}
-                >
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="floatingusername"
-                    placeholder="Username"
-                    required
-                    style={{
-                      width: "300px",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <label htmlFor="floatingusername">Username</label>
-                </div>
-                <div
-                  className="form-floating mb-3"
-                  style={{ marginBottom: "30px" }}
-                >
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    pattern="[0-9]{10}"
-                    placeholder="888888888"
-                    required
-                    className="form-control"
-                    style={{
-                      width: "300px",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <label htmlFor="phone">Ph no</label>
-                </div>
-                <div
-                  className="form-floating mb-3"
-                  style={{ marginBottom: "30px" }}
-                >
-                  <input
-                    type="date"
-                    className="form-control"
-                    id="date"
-                    placeholder="date"
-                    required
-                    style={{
-                      width: "300px",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <label htmlFor="date">Date</label>
-                </div>
-                <div
-                  className="form-floating mb-3"
-                  style={{ marginBottom: "30px" }}
-                >
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="floatingsignuppwd"
-                    placeholder="Password"
-                    required
-                    style={{
-                      width: "300px",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <label htmlFor="floatingsignuppwd">Password</label>
-                </div>
-                <div>
-                  <input
-                    type="submit"
-                    className="btn btn-outline-danger"
-                    id="signupsubmit"
-                    value="Sign up"
-                  ></input>
-                </div>
-              </div>
-            </form>
+            <SignUpForm />
             <div
               className="modal-footer"
               style={{ display: "flex", justifyContent: "center" }}
