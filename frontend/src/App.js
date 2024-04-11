@@ -7,6 +7,8 @@ import Hompage from "./components/Hompage";
 import Footer from "./components/Footer";
 import Moviedetails from "./components/Moviedetails";
 import BuyTickets from "./components/BuyTickets";
+import SeatSelection from "./components/SeatSelection";
+
 function App() {
   return (
     <div className="App">
@@ -15,6 +17,7 @@ function App() {
         <Route exact path="/" element={<Hompage />} />
         <Route exact path="/movie-details" element={<Moviedetails />} />
         <Route exact path="/buy-tickets" element={<BuyTickets />} />
+        <Route exact path="/select-seat" element={<SeatSelection />} />
       </Routes>
       <Footer />
     </div>

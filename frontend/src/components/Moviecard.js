@@ -1,40 +1,58 @@
 import React from "react";
-import "./Moviecard.css";
 import { Link } from "react-router-dom";
+import myImage from "../download.jpg";
 
 const MovieCard = ({ movieName, movieDesc }) => {
   return (
-    <Link to="/movie-details" className="card-link">
-      <div className="card" style={{ width: "18rem" }}>
-        <div className="card-body">
-          <h5 className="card-title">{movieName}</h5>
-          <p className="card-text">{movieDesc}</p>
-          {/* <a href="#" className="btn btn-primary">
-          Go somewhere
-        </a> */}
+    <Link
+      to="/movie-details"
+      className="card-link"
+      style={{
+        textDecoration: "none",
+        width: "200px",
+        borderRadius: "8px",
+        overflow: "hidden",
+        position: "relative",
+        display: "block",
+      }}
+    >
+      <div
+        className="card"
+        style={{
+          position: "relative",
+        }}
+      >
+        <img
+          src={myImage}
+          className="card-img-top"
+          alt={movieName}
+          style={{ width: "100%", height: "auto", objectFit: "contain" }}
+        />
+        <div
+          className="card-overlay"
+          style={{
+            position: "absolute",
+            bottom: "0",
+            left: "0",
+            width: "100%",
+          }}
+        >
+          <h5
+            className="card-title"
+            style={{
+              margin: "0",
+              padding: "10px",
+              background:
+                "linear-gradient(rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.5))",
+              color: "#fff",
+            }}
+          >
+            {movieName}
+          </h5>
         </div>
       </div>
     </Link>
   );
 };
-
-// const MovieCard = ({ movieName, movieDesc }) => {
-//   return (
-//     <div
-//       className="card"
-//       style={{ width: "18rem", display: "flex", flexDirection: "column" }}
-//     >
-//       <div className="card-body" style={{ flex: "1", overflow: "hidden" }}>
-//         <h5 className="card-title">{movieName}</h5>
-//         <p className="card-text">{movieDesc}</p>
-//       </div>
-//       <div style={{ alignSelf: "flex-end" }}>
-//         {/* <a href="#" className="btn btn-primary">
-//           Go somewhere
-//         </a> */}
-//       </div>
-//     </div>
-//   );
-// };
 
 export default MovieCard;

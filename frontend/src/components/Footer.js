@@ -57,7 +57,7 @@ const Footer = () => {
                     <input
                       type="text"
                       className="form-control"
-                      id="floatingInput"
+                      id="floatinguser"
                       placeholder="Username"
                       required
                       style={{
@@ -74,7 +74,7 @@ const Footer = () => {
                     <input
                       type="password"
                       className="form-control"
-                      id="floatingPassword"
+                      id="floatingpwd"
                       placeholder="Password"
                       required
                       style={{
