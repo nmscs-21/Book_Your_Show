@@ -1,7 +1,11 @@
 const express = require("express");
-const { pool } = require("./database");
-
+const { pool } = require("./config/database");
 const app = express();
+const userRoutes = require("./routes/userRoutes");
+const { notFound, errorHandler } = require("./middleware/errorMiddleware");
+const dotenv = require("dotenv");
+
+dotenv.config({ path: "../.env" });
 
 app.get("/", (req, res) => {
   //   const movies = pool.query("select * from Movies", (err, result, fields) => {
@@ -58,6 +62,14 @@ app.get("/movies", (req, res) => {
   });
 });
 
-app.listen(5000, () => {
-  console.log("Server started on port 5000");
+// to parse JSON request bodies
+app.use(express.json());
+
+app.use("/api/user", userRoutes);
+app.use(notFound);
+app.use(errorHandler);
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
 });
