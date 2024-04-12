@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import "./Moviecard.css";
@@ -7,6 +7,11 @@ import AuthComponent from "./AuthComponent";
 import Signin from "./SignIn";
 
 const Navbar = () => {
+  const [selectedItem, setSelectedItem] = useState("Action");
+
+  const handleItemClick = (itemName) => {
+    setSelectedItem(itemName);
+  };
   return (
     <nav className="navbar bg-body-tertiary d-flex justify-content-between align-items-center">
       <Signin />
@@ -57,29 +62,49 @@ const Navbar = () => {
           Search
         </button>
       </form>
-
       <div className="dropdown-center">
         <button
           className="btn btn-outline-danger dropdown-toggle"
           type="button"
           data-bs-toggle="dropdown"
           aria-expanded="false"
+          style={{
+            width: "150px",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+            background: "none",
+            borderWidth: "0",
+            color: "#dc3545",
+          }}
         >
-          Location
+          {selectedItem}
         </button>
         <ul className="dropdown-menu">
           <li>
-            <a className="dropdown-item" href="#">
+            <a
+              className="dropdown-item"
+              href="#"
+              onClick={() => handleItemClick("Action")}
+            >
               Action
             </a>
           </li>
           <li>
-            <a className="dropdown-item" href="#">
+            <a
+              className="dropdown-item"
+              href="#"
+              onClick={() => handleItemClick("Another action")}
+            >
               Another action
             </a>
           </li>
           <li>
-            <a className="dropdown-item" href="#">
+            <a
+              className="dropdown-item"
+              href="#"
+              onClick={() => handleItemClick("Something else here")}
+            >
               Something else here
             </a>
           </li>
