@@ -148,7 +148,7 @@ const fetchScreens = asyncHandler(async (req, res) => {
           return {
             theatreId: row.theatreId,
             theatreName: row.theatreName,
-            theatreLoc: location,
+            theatreLoc: row.location,
             screenId: row.screenId,
             showDate: row.showDate,
           };

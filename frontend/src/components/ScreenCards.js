@@ -1,7 +1,7 @@
 import React from "react";
 import Slot from "./Slot";
 
-const ScreenCards = ({ screenName, TheatreName }) => {
+const ScreenCards = ({ screenName, theatreName }) => {
   return (
     <div className="card mb-3">
       <div className="row g-0">
@@ -13,7 +13,7 @@ const ScreenCards = ({ screenName, TheatreName }) => {
             }}
           >
             <h5 className="card-title">{screenName}</h5>
-            <p className="card-text">{TheatreName}</p>
+            <p className="card-text">{theatreName}</p>
           </div>
         </div>
         <div className="col-md-8">
