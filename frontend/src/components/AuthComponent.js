@@ -1,46 +1,13 @@
-import { useState, useEffect } from "react";
 import UserBadge from "./UserBadge";
+import { useUser } from "../context/UserContext";
 
 const AuthComponent = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [name, setName] = useState(null);
-
-  const isLoggedIn = () => {
-    const userInfo = localStorage.getItem("userInfo");
-    if (userInfo) {
-      try {
-        const { token, userName } = JSON.parse(userInfo);
-        return { loggedIn: true, name: userName };
-      } catch (error) {
-        console.error("Error decoding token:", error);
-      }
-    }
-    return { loggedIn: false, name: null };
-  };
-
-  useEffect(() => {
-    const handleStorageChange = () => {
-      const { loggedIn, name } = isLoggedIn();
-      setLoggedIn(loggedIn);
-      setName(name);
-    };
-
-    // Call isLoggedIn initially
-    handleStorageChange();
-
-    // Add event listener for localStorage changes
-    window.addEventListener("storage", handleStorageChange);
-
-    // Cleanup
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, []);
+  const { user } = useUser();
 
   return (
     <div>
-      {loggedIn ? (
-        <UserBadge username={name} />
+      {user ? (
+        <UserBadge username={user.userName} />
       ) : (
         <button
           type="button"

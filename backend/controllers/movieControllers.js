@@ -41,19 +41,12 @@ const fetchMovieData = asyncHandler(async (req, res) => {
       }
       // Map the result to an array of movie objects
 
-      const releaseDate = new Date(result[0].releaseDate);
-      const formattedDate = releaseDate.toLocaleDateString("en-GB"); // 'en-GB' for DD-MM-YYYY format
-      const [day, month, year] = formattedDate.split("/");
-      const dateString = `${day}-${month}-${year}`;
-
-      console.log(dateString); // Output will be in the format 'DD-MM-YYYY'
-
       const movies = result.map((movie) => {
         return {
           movieId: movie.movieId,
           movieName: movie.movieName,
           movieDesc: movie.movieDesc,
-          releaseDate: dateString,
+          releaseDate: formatString(result[0].releaseDate),
           duration: movie.duration,
         };
       });
@@ -63,5 +56,13 @@ const fetchMovieData = asyncHandler(async (req, res) => {
     }
   );
 });
+
+const formatString = (string) => {
+  const releaseDate = new Date(string);
+  const formattedDate = releaseDate.toLocaleDateString("en-GB"); // 'en-GB' for DD-MM-YYYY format
+  const [day, month, year] = formattedDate.split("/");
+  const dateString = `${day}-${month}-${year}`;
+  return dateString;
+};
 
 module.exports = { fetchMovies, fetchMovieData };
