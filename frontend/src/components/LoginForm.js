@@ -41,11 +41,24 @@ const LoginForm = () => {
         closeButton.click();
       }
 
+      setPwd("");
+      setUserName("");
+
       // Reload the page
       window.location.reload();
     } catch (error) {
       // Add a failed toast
       console.log(error);
+      navigate("/");
+      // Close the modal
+
+      const closeButton = document.querySelector(".btn-close");
+      if (closeButton) {
+        closeButton.click();
+      }
+      setPwd("");
+      setUserName("");
+
       // setLoading(false);
     }
   };
