@@ -1,9 +1,27 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Reviewcard from "./Reviewcard";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import myImage from "../download.jpg";
+import axios from "axios";
 
 const Moviedetails = () => {
+  const [movie, setMovie] = useState({});
+
+  const fetchMovieData = async () => {
+    console.log(`/movies/${movieId}`);
+    const { data } = await axios.get(`/api/movies/${movieId}`);
+    console.log(`/movies/${movieId}`);
+    console.log(data);
+    setMovie(data[0]);
+  };
+
+  const { movieId } = useParams();
+  console.log(`/movies/${movieId}`);
+
+  useEffect(() => {
+    fetchMovieData();
+  }, []);
+
   return (
     <div>
       <div
@@ -32,8 +50,11 @@ const Moviedetails = () => {
               className="card-body"
               style={{ color: "#ffffff", paddingTop: "50px" }}
             >
-              <h1 className="card-title">Movie Name</h1>
-              <p className="card-text">duration and release date</p>
+              <h1 className="card-title">{movie.movieName}</h1>
+              <p className="card-text">
+                {`${movie.duration} min - `}
+                {` ${movie.releaseDate}`}
+              </p>
               <div style={{ paddingBottom: "20px" }}>
                 <button
                   type="button"
@@ -109,7 +130,7 @@ const Moviedetails = () => {
       </div>
       <div className="card" style={{ paddingLeft: "140px" }}>
         <h3>About the Movie</h3>
-        <div className="card-body">Movie Description</div>
+        <div className="card-body">{movie.movieDesc}</div>
       </div>
       <div
         style={{

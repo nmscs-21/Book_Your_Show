@@ -45,7 +45,7 @@ const UserBadge = ({ username }) => {
           <p style={{ textAlign: "center" }}>{username}</p>
         </li>
         <li>
-          <hr class="dropdown-divider" />
+          <hr className="dropdown-divider" />
         </li>
         <li>
           <a className="dropdown-item" href="/Booking-table">
@@ -58,7 +58,7 @@ const UserBadge = ({ username }) => {
           </a>
         </li>
         <li>
-          <hr class="dropdown-divider" />
+          <hr className="dropdown-divider" />
         </li>
         <li>
           <a className="dropdown-item" href="/" onClick={logoutHandler}>

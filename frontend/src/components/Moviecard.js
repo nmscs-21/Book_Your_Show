@@ -2,11 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import myImage from "../download.jpg";
 
-const MovieCard = ({ movieName, movieDesc }) => {
+const MovieCard = ({ movieName, movieId }) => {
+  const navigateToMovie = () => {
+    console.log(movieId);
+  };
+
   return (
     <Link
-      to="/movie-details"
+      to={{ pathname: `/movie-details/${movieId}` }}
       className="card-link"
+      onClick={navigateToMovie}
       style={{
         textDecoration: "none",
         width: "200px",

@@ -2,6 +2,7 @@ const express = require("express");
 const { pool } = require("./config/database");
 const app = express();
 const userRoutes = require("./routes/userRoutes");
+const movieRoutes = require("./routes/movieRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const dotenv = require("dotenv");
 
@@ -37,35 +38,11 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/movies", (req, res) => {
-  // Fetch movies from the database
-  pool.query("SELECT * FROM Movie", (err, result, fields) => {
-    if (err) {
-      // Handle error
-      console.error(err);
-      res.status(500).send("Internal Server Error");
-      return;
-    }
-    // Map the result to an array of movie objects
-    const movies = result.map((movie) => {
-      return {
-        movieId: movie.movieId,
-        movieName: movie.movieName,
-        movieDesc: movie.movieDesc,
-        releaseDate: movie.releasDate,
-        // Add other attributes here according to your database schema
-      };
-    });
-
-    // Send the list of movies as a JavaScript object
-    res.json(movies);
-  });
-});
-
 // to parse JSON request bodies
 app.use(express.json());
 
 app.use("/api/user", userRoutes);
+app.use("/api/movies", movieRoutes);
 app.use(notFound);
 app.use(errorHandler);
 

@@ -15,7 +15,11 @@ function App() {
       <Navbar />
       <Routes>
         <Route exact path="/" element={<Hompage />} />
-        <Route exact path="/movie-details" element={<Moviedetails />} />
+        <Route
+          exact
+          path="/movie-details/:movieId"
+          element={<Moviedetails />}
+        />
         <Route exact path="/buy-tickets" element={<BuyTickets />} />
         <Route exact path="/select-seat" element={<SeatSelection />} />
       </Routes>
