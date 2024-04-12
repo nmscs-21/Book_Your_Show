@@ -1,7 +1,7 @@
 import React from "react";
 import Slot from "./Slot";
 
-const ScreenCards = ({ screenName, TheatreName, slotTime }) => {
+const ScreenCards = ({ screenName, TheatreName }) => {
   return (
     <div className="card mb-3">
       <div className="row g-0">

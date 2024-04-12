@@ -3,6 +3,7 @@ const { pool } = require("./config/database");
 const app = express();
 const userRoutes = require("./routes/userRoutes");
 const movieRoutes = require("./routes/movieRoutes");
+const screeningRoutes = require("./routes/screeningRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const dotenv = require("dotenv");
 
@@ -43,6 +44,7 @@ app.use(express.json());
 
 app.use("/api/user", userRoutes);
 app.use("/api/movies", movieRoutes);
+app.use("/api/theatres", screeningRoutes);
 app.use(notFound);
 app.use(errorHandler);
 

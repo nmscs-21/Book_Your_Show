@@ -3,13 +3,13 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import MovieProvider from "./context/MovieProvider";
+import UserProvider from "./context/UserContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <MovieProvider>
-    <BrowserRouter>
+  <BrowserRouter>
+    <UserProvider>
       <App />
-    </BrowserRouter>
-  </MovieProvider>
+    </UserProvider>
+  </BrowserRouter>
 );

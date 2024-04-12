@@ -1,25 +1,33 @@
 import React, { useEffect, useRef, useState } from "react";
 import Reviewcard from "./Reviewcard";
 import { Link, useLocation, useParams } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 import myImage from "../download.jpg";
 import axios from "axios";
 
 const Moviedetails = () => {
   const [movie, setMovie] = useState({});
+  const [targetModal, setTargetModal] = useState("#login");
+  const { user, setSelectedMovie, setSelectedMovieId } = useUser();
+
+  const giveReview = () => {
+    console.log("running");
+    if (user) setTargetModal("#review");
+    else setTargetModal("#login");
+  };
 
   const fetchMovieData = async () => {
-    console.log(`/movies/${movieId}`);
     const { data } = await axios.get(`/api/movies/${movieId}`);
-    console.log(`/movies/${movieId}`);
-    console.log(data);
     setMovie(data[0]);
+    setSelectedMovie(data[0].movieName);
+    setSelectedMovieId(data[0].movieId);
   };
 
   const { movieId } = useParams();
-  console.log(`/movies/${movieId}`);
 
   useEffect(() => {
     fetchMovieData();
+    giveReview();
   }, []);
 
   return (
@@ -60,7 +68,7 @@ const Moviedetails = () => {
                   type="button"
                   className="btn btn-light me-5"
                   data-bs-toggle="modal"
-                  data-bs-target="#review"
+                  data-bs-target={targetModal}
                 >
                   Give Review
                 </button>

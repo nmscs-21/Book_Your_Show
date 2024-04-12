@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import Date from "./Date";
+import { useUser } from "../context/UserContext";
 
 const FixedBar = () => {
-  const [selectedDate, setSelectedDate] = useState("12");
+  const { selectedDate, setSelectedDate } = useUser();
 
   const handleDateSelect = (date) => {
     setSelectedDate(date);
   };
+
   return (
     <Navbar bg="white" variant="light" sticky="top" style={{ zIndex: "999" }}>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />

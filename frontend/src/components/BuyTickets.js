@@ -1,12 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FixedBar from "./FixedBar";
 import ScreenCards from "./ScreenCards";
+import { useUser } from "../context/UserContext";
+import axios from "axios";
 
 const BuyTickets = () => {
+  const { selectedMovie, selectedMovieId, selectedDate } = useUser();
+  const [screens, setScreens] = useState([]);
+
+  const fetchSreens = async () => {
+    console.log(selectedMovieId);
+    const { data } = await axios.get(
+      `/api/theatres?movieId=${selectedMovieId}&date=${selectedDate}`
+    );
+
+    setScreens(data);
+    console.log(data);
+  };
+
+  // fetchSreens();
+  useEffect(() => {
+    fetchSreens();
+  }, []);
+
   return (
     <div style={{ backgroundColor: "#f4f4f4" }}>
       <div>
-        <h2 style={{ paddingLeft: "150px" }}>Movie Name</h2>
+        <h2 style={{ paddingLeft: "150px" }}>{selectedMovie}</h2>
       </div>
       <FixedBar />
 
@@ -18,26 +38,15 @@ const BuyTickets = () => {
           paddingBottom: "10px",
         }}
       >
-        <ScreenCards
-          screenName="Screen1"
-          TheatreName="MGB"
-          slotTime="10:00AM"
-        />
-        <ScreenCards
-          screenName="Screen1"
-          TheatreName="MGB"
-          slotTime="10:00AM"
-        />
-        <ScreenCards
-          screenName="Screen1"
-          TheatreName="MGB"
-          slotTime="10:00AM"
-        />
-        <ScreenCards
-          screenName="Screen1"
-          TheatreName="MGB"
-          slotTime="10:00AM"
-        />
+        <ScreenCards screenName="Screen1" theatreName="MGB" />
+        <ScreenCards screenName="Screen1" theatreName="MGB" />
+        {screens.map((screen) => (
+          <ScreenCards
+            key={[screen.theatreId, screen.screenId]}
+            screenName={`Screen ${screen.screenId}`}
+            theatreName={screen.theatreName}
+          />
+        ))}
       </div>
     </div>
   );
