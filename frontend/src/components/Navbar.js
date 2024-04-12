@@ -1,17 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Moviecard.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import AuthComponent from "./AuthComponent";
 import Signin from "./SignIn";
+import axios from "axios";
+import { useUser } from "../context/UserContext";
 
 const Navbar = () => {
-  const [selectedItem, setSelectedItem] = useState("Action");
+  // const [selectedItem, setSelectedItem] = useState("Locations");
+  // const [locations, setLocations] = useState([]);
+  // const { loc } = useUser();
+  // const navigate = useNavigate();
 
-  const handleItemClick = (itemName) => {
-    setSelectedItem(itemName);
-  };
+  // console.log("loc", loc);
+  // const handleLocClick = (itemName) => {
+  //   setSelectedItem(itemName);
+  // navigate(`/${selectedItem}`);
+  // };
+
+  // const getCities = async () => {
+  //   const { data } = await axios.get("/api/theatres/locations");
+  //   console.log(data);
+  //   setLocations(data);
+  //   // setSelectedItem(data[0].theatreLoc);
+  //   // navigate(`/${data[0].theatreLoc}`);
+  //   if (!loc) {
+  //     // Redirect only if a location hasn't been previously selected
+  //     setSelectedItem(data[0].theatreLoc);
+  //     console.log(data[0].theatreLoc);
+  //     // navigate(`/${data[0].theatreLoc}`);
+  //     localStorage.setItem("checkLoc", JSON.stringify(data[0].theatreLoc));
+  //   }
+  //   // localStorage.setItem("checkLoc", JSON.stringify(data));
+  // };
+
+  // useEffect(() => {
+  //   getCities();
+  // }, []);
+
   return (
     <nav className="navbar bg-body-tertiary d-flex justify-content-between align-items-center">
       <Signin />
@@ -78,36 +106,20 @@ const Navbar = () => {
             color: "#dc3545",
           }}
         >
-          {selectedItem}
+          {/* {selectedItem} */}Hi
         </button>
         <ul className="dropdown-menu">
-          <li>
-            <a
-              className="dropdown-item"
-              href="#"
-              onClick={() => handleItemClick("Action")}
-            >
-              Action
-            </a>
-          </li>
-          <li>
-            <a
-              className="dropdown-item"
-              href="#"
-              onClick={() => handleItemClick("Another action")}
-            >
-              Another action
-            </a>
-          </li>
-          <li>
-            <a
-              className="dropdown-item"
-              href="#"
-              onClick={() => handleItemClick("Something else here")}
-            >
-              Something else here
-            </a>
-          </li>
+          {/* {locations.map((location) => (
+            <li>
+              <Link
+                className="dropdown-item"
+                to={`/${location.theatreLoc}`}
+                onClick={() => handleLocClick(location.theatreLoc)}
+              >
+                {location.theatreLoc}
+              </Link>
+            </li>
+          ))} */}
         </ul>
       </div>
       <AuthComponent />

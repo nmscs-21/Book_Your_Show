@@ -161,4 +161,27 @@ const fetchScreens = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { fetchScreens };
+const fetchLocations = asyncHandler(async (req, res) => {
+  pool.query(
+    "SELECT DISTINCT theatreLoc FROM Theatre",
+    (err, result, fields) => {
+      if (err) {
+        // Handle error
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      // Map the result to an array of objects
+      const details = result.map((row) => {
+        return {
+          theatreLoc: row.theatreLoc,
+        };
+      });
+
+      // Send the list of details as a JavaScript object
+      res.json(details);
+    }
+  );
+});
+
+module.exports = { fetchScreens, fetchLocations };

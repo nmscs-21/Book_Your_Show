@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Hompage from "./components/Hompage";
 import Footer from "./components/Footer";
+import NotFound from "./components/NotFound";
 import Moviedetails from "./components/Moviedetails";
 import BuyTickets from "./components/BuyTickets";
 import SeatSelection from "./components/SeatSelection";
@@ -15,6 +16,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route exact path="/" element={<Hompage />} />
+        <Route path="/:location" element={<Hompage />} />
         <Route
           exact
           path="/movie-details/:movieId"
@@ -22,6 +24,7 @@ function App() {
         />
         <Route exact path="/buy-tickets" element={<BuyTickets />} />
         <Route exact path="/select-seat" element={<SeatSelection />} />
+        <Route element={<NotFound />} />
       </Routes>
       <Footer />
     </div>

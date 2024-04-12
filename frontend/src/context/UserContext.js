@@ -8,14 +8,35 @@ const UserProvider = ({ children }) => {
   const [selectedMovie, setSelectedMovie] = useState();
   const [selectedMovieId, setSelectedMovieId] = useState();
   const [selectedDate, setSelectedDate] = useState();
+  const [loc, setLoc] = useState();
 
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  //   const checkLoc = JSON.parse(localStorage.getItem("checkLoc"));
+  //   console.log(checkLoc);
+  //   setUser(userInfo);
+  //   setLoc(checkLoc);
+  //   console.log(loc);
+  //   if (!userInfo) {
+  //     navigate("/");
+  //   }
+  // }, []);
+
   useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    setUser(userInfo);
-    if (!userInfo) {
-      navigate("/");
+    try {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo")) || null;
+      const checkLoc = JSON.parse(localStorage.getItem("checkLoc")) || null;
+      console.log(checkLoc);
+      setUser(userInfo);
+      setLoc(checkLoc);
+      console.log(loc);
+      if (!userInfo) {
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Error in UserProvider useEffect:", error);
     }
   }, []);
 
