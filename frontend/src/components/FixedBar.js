@@ -9,7 +9,7 @@ const FixedBar = () => {
     setSelectedDate(date);
   };
   return (
-    <Navbar bg="white" variant="light" sticky="top">
+    <Navbar bg="white" variant="light" sticky="top" style={{ zIndex: "999" }}>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto" style={{ paddingLeft: "150px" }}>

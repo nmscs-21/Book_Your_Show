@@ -119,12 +119,6 @@ const SignUpForm = () => {
             <label htmlFor="floatingPassword">Password</label>
           </div>
           <div>
-            <input
-              type="submit"
-              className="btn btn-outline-danger"
-              id="signupsubmit"
-              value="Sign up"
-            ></input>
             <button
               className="btn btn-outline-danger"
               id="signinsubmit"
