@@ -10,26 +10,6 @@ const DeleteMovieForm = () => {
         <div className="mb-3">
           <input type="text" className="form-control" placeholder="Movie Id" />
         </div>
-        <div className="mb-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Movie Name"
-          />
-        </div>
-        <div className="mb-3">
-          <input type="text" className="form-control" placeholder="Duration" />
-        </div>
-        <div className="mb-3">
-          <textarea className="form-control" placeholder="Description" />
-        </div>
-        <div className="mb-3">
-          <input
-            type="date"
-            className="form-control"
-            placeholder="Release Date"
-          />
-        </div>
         <button type="submit" className="btn btn-danger">
           Delete Movie
         </button>

@@ -17,9 +17,6 @@ const DeleteScreenForm = () => {
             placeholder="Theatre Name"
           />
         </div>
-        <div className="mb-3">
-          <input type="text" className="form-control" placeholder="Layout Id" />
-        </div>
         <div>
           <button type="submit" className="btn btn-danger">
             Delete Screen

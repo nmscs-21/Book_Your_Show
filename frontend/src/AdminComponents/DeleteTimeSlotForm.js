@@ -10,22 +10,6 @@ const DeleteTimeSlotForm = () => {
         <div className="mb-3">
           <input type="text" className="form-control" placeholder="Slot Id" />
         </div>
-        <div className="mb-3">
-          <input type="text" className="form-control" placeholder="Screen Id" />
-        </div>
-        <div className="mb-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Theatre Name"
-          />
-        </div>
-        <div className="mb-3">
-          <input type="date" className="form-control" placeholder="date" />
-        </div>
-        <div className="mb-3">
-          <input type="text" className="form-control" placeholder="Slot" />
-        </div>
         <div>
           <button type="submit" className="btn btn-danger">
             Delete TimeSlot
