@@ -15,7 +15,7 @@ const Navbar = () => {
 
   const handleLocClick = (itemName) => {
     setSelectedItem(itemName);
-    navigate(`/${itemName}`);
+    // navigate(`/${itemName}`);
     localStorage.setItem("locInfo", itemName);
     console.log(itemName);
   };
@@ -25,6 +25,7 @@ const Navbar = () => {
     // console.log(data);
     setLocations(data);
     setSelectedItem(data[0].theatreLoc);
+
     // navigate(`/${data[0].theatreLoc}`);
   };
 

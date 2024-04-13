@@ -14,8 +14,8 @@ const UserProvider = ({ children }) => {
 
   useEffect(() => {
     try {
-      const userInfo = JSON.parse(localStorage.getItem("userInfo")) || null;
-      const locInfo = JSON.parse(localStorage.getItem("locInfo")) || null;
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const locInfo = JSON.parse(localStorage.getItem("locInfo"));
       setUser(userInfo);
       setLoc(locInfo);
 
