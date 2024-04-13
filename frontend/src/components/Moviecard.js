@@ -1,15 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import myImage from "../download.jpg";
+import { useUser } from "../context/UserContext";
 
 const MovieCard = ({ movieName, movieId }) => {
+  const { loc } = useUser();
+
   const navigateToMovie = () => {
     console.log(movieId);
   };
 
   return (
     <Link
-      to={{ pathname: `/movie-details/${movieId}` }}
+      to={{ pathname: `/${loc}/movie-details/${movieId}` }}
       className="card-link"
       onClick={navigateToMovie}
       style={{

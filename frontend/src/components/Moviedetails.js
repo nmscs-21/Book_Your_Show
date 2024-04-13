@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Reviewcard from "./Reviewcard";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import myImage from "../download.jpg";
 import axios from "axios";

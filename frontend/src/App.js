@@ -19,7 +19,7 @@ function App() {
         <Route path="/:location" element={<Hompage />} />
         <Route
           exact
-          path="/movie-details/:movieId"
+          path="/:location/movie-details/:movieId"
           element={<Moviedetails />}
         />
         <Route exact path="/buy-tickets" element={<BuyTickets />} />

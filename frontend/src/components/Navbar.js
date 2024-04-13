@@ -6,39 +6,35 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import AuthComponent from "./AuthComponent";
 import Signin from "./SignIn";
 import axios from "axios";
-import { useUser } from "../context/UserContext";
 
 const Navbar = () => {
-  // const [selectedItem, setSelectedItem] = useState("Locations");
-  // const [locations, setLocations] = useState([]);
-  // const { loc } = useUser();
-  // const navigate = useNavigate();
+  const [selectedItem, setSelectedItem] = useState("Locations");
+  const [locations, setLocations] = useState([]);
 
-  // console.log("loc", loc);
-  // const handleLocClick = (itemName) => {
-  //   setSelectedItem(itemName);
-  // navigate(`/${selectedItem}`);
-  // };
+  const navigate = useNavigate();
 
-  // const getCities = async () => {
-  //   const { data } = await axios.get("/api/theatres/locations");
-  //   console.log(data);
-  //   setLocations(data);
-  //   // setSelectedItem(data[0].theatreLoc);
-  //   // navigate(`/${data[0].theatreLoc}`);
-  //   if (!loc) {
-  //     // Redirect only if a location hasn't been previously selected
-  //     setSelectedItem(data[0].theatreLoc);
-  //     console.log(data[0].theatreLoc);
-  //     // navigate(`/${data[0].theatreLoc}`);
-  //     localStorage.setItem("checkLoc", JSON.stringify(data[0].theatreLoc));
-  //   }
-  //   // localStorage.setItem("checkLoc", JSON.stringify(data));
-  // };
+  const handleLocClick = (itemName) => {
+    setSelectedItem(itemName);
+    navigate(`/${itemName}`);
+    localStorage.setItem("locInfo", itemName);
+    console.log(itemName);
+  };
 
-  // useEffect(() => {
-  //   getCities();
-  // }, []);
+  const getCities = async () => {
+    const { data } = await axios.get("/api/theatres/locations");
+    // console.log(data);
+    setLocations(data);
+    setSelectedItem(data[0].theatreLoc);
+    // navigate(`/${data[0].theatreLoc}`);
+  };
+
+  useEffect(() => {
+    navigate(`/${selectedItem}`);
+  }, [selectedItem]);
+
+  useEffect(() => {
+    getCities();
+  }, []);
 
   return (
     <nav className="navbar bg-body-tertiary d-flex justify-content-between align-items-center">
@@ -106,12 +102,13 @@ const Navbar = () => {
             color: "#dc3545",
           }}
         >
-          {/* {selectedItem} */}Hi
+          {selectedItem}
         </button>
         <ul className="dropdown-menu">
-          {/* {locations.map((location) => (
+          {locations.map((location) => (
             <li>
               <Link
+                key={location.theatreLoc}
                 className="dropdown-item"
                 to={`/${location.theatreLoc}`}
                 onClick={() => handleLocClick(location.theatreLoc)}
@@ -119,7 +116,7 @@ const Navbar = () => {
                 {location.theatreLoc}
               </Link>
             </li>
-          ))} */}
+          ))}
         </ul>
       </div>
       <AuthComponent />
