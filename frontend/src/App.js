@@ -9,6 +9,7 @@ import NotFound from "./components/NotFound";
 import Moviedetails from "./components/Moviedetails";
 import BuyTickets from "./components/BuyTickets";
 import SeatSelection from "./components/SeatSelection";
+import Admin from "./AdminComponents/Admin";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           path="/:location/movie-details/:movieId"
           element={<Moviedetails />}
         />
+        <Route exact path="/admin" element={<Admin />} />
         <Route exact path="/buy-tickets" element={<BuyTickets />} />
         <Route exact path="/select-seat" element={<SeatSelection />} />
         <Route element={<NotFound />} />

@@ -11,7 +11,7 @@ const BuyTickets = () => {
   const fetchSreens = async () => {
     console.log(selectedMovieId);
     const { data } = await axios.get(
-      `/api/theatres?movieId=${selectedMovieId}&date=${selectedDate}`
+      `/api/theatres?movieId=${selectedMovieId}`
     );
 
     setScreens(data);
@@ -21,7 +21,7 @@ const BuyTickets = () => {
   // fetchSreens();
   useEffect(() => {
     fetchSreens();
-  }, []);
+  }, [selectedMovieId]);
 
   return (
     <div style={{ backgroundColor: "#f4f4f4" }}>
@@ -42,7 +42,7 @@ const BuyTickets = () => {
         <ScreenCards screenName="Screen1" theatreName="MGB" />
         {screens.map((screen) => (
           <ScreenCards
-            key={[screen.theatreId, screen.screenId]}
+            key={[screen.theatreId, screen.screenId, screen.showDate]}
             screenName={`Screen ${screen.screenId}`}
             theatreName={screen.theatreName}
           />
