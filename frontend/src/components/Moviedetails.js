@@ -126,7 +126,7 @@ const Moviedetails = () => {
                 </div>
               </div>
               <div>
-                <Link to="/buy-tickets">
+                <Link to="buy-tickets/">
                   <button type="button" className="btn btn-danger btn-lg me-5">
                     Book Tickets
                   </button>

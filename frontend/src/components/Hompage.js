@@ -3,22 +3,34 @@ import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import MovieCard from "./Moviecard";
 import "./Moviecard.css";
-// import { useParams } from "react-router-dom";
+import { useUser } from "../context/UserContext";
+import { useParams } from "react-router-dom";
 
 const Hompage = () => {
   const [movies, setMovies] = useState([]);
-
-  // const { loc } = useParams();
+  const { location } = useParams();
+  const { setUser, loc, setLoc } = useUser();
+  console.log(loc);
 
   const fetchMovies = async () => {
-    const { data } = await axios.get("/api/movies");
+    const { data } = await axios.get(`/api/movies/?loc=${loc}`);
     console.log(data);
     setMovies(data);
   };
 
   useEffect(() => {
     fetchMovies();
-  }, []);
+  }, [setUser, loc]);
+
+  useEffect(() => {
+    // Check if loc parameter is available in the URL
+    if (location) {
+      console.log(location);
+      // Add validation logic here...
+      setLoc(location); // Set loc state based on URL parameter
+      localStorage.setItem("locInfo", location);
+    }
+  }, [location]);
 
   return (
     <div style={{ padding: "30px" }}>

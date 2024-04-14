@@ -3,25 +3,56 @@ const asyncHandler = require("express-async-handler");
 
 const fetchMovies = asyncHandler(async (req, res) => {
   // Fetch movies from the database
-  pool.query("SELECT movieId, movieName FROM Movie", (err, result, fields) => {
-    if (err) {
-      // Handle error
-      console.error(err);
-      console.log(err);
-      res.status(500).send("Internal Server Error");
-      return;
-    }
-    // Map the result to an array of movie objects
-    const movies = result.map((movie) => {
-      return {
-        movieId: movie.movieId,
-        movieName: movie.movieName,
-      };
-    });
+  const loc = req.query.loc;
+  if (!loc) {
+    pool.query(
+      "SELECT movieId, movieName FROM Movie",
+      (err, result, fields) => {
+        if (err) {
+          // Handle error
+          console.error(err);
+          console.log(err);
+          res.status(500).send("Internal Server Error");
+          return;
+        }
+        // Map the result to an array of movie objects
+        const movies = result.map((movie) => {
+          return {
+            movieId: movie.movieId,
+            movieName: movie.movieName,
+          };
+        });
 
-    // Send the list of movies as a JavaScript object
-    res.json(movies);
-  });
+        // Send the list of movies as a JavaScript object
+        res.json(movies);
+      }
+    );
+  } else {
+    pool.query(
+      "SELECT DISTINCT m.movieId, m.movieName FROM Movie m JOIN ScreeningSchedule " +
+        "ss ON m.movieId = ss.movieId JOIN Theatre t ON ss.theatreId = t.theatreId " +
+        "WHERE t.theatreLoc = ?",
+      [loc],
+      (err, result, fields) => {
+        if (err) {
+          // Handle error
+          console.error(err);
+          res.status(500).send("Internal Server Error");
+          return;
+        }
+        // Map the result to an array of movie objects
+        const movies = result.map((movie) => {
+          return {
+            movieId: movie.movieId,
+            movieName: movie.movieName,
+          };
+        });
+
+        // Send the list of movies as a JavaScript object
+        res.json(movies);
+      }
+    );
+  }
 });
 
 const fetchMovieData = asyncHandler(async (req, res) => {

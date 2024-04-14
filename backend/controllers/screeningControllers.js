@@ -184,4 +184,41 @@ const fetchLocations = asyncHandler(async (req, res) => {
   );
 });
 
-module.exports = { fetchScreens, fetchLocations };
+const fetchScreenings = asyncHandler(async (req, res) => {
+  const movieId = req.query.movieId;
+  const loc = req.query.loc;
+
+  if (movieId && loc) {
+    pool.query(
+      "SELECT T.theatreId, T.theatreName, SS.screenId, SS.showDate, M.movieName " +
+        "FROM Theatre T " +
+        "INNER JOIN ScreeningSchedule SS ON T.theatreId = SS.theatreId " +
+        "INNER JOIN Movie M ON SS.movieId = M.movieId " +
+        "WHERE SS.movieId = ? AND T.theatreLoc = ?",
+      [movieId, loc], // Pass the movie ID and theatre location
+      (err, result, fields) => {
+        if (err) {
+          // Handle error
+          console.error(err);
+          res.status(500).send("Internal Server Error");
+          return;
+        }
+        // Map the result to an array of objects
+        const details = result.map((row) => {
+          return {
+            theatreId: row.theatreId,
+            theatreName: row.theatreName,
+            screenId: row.screenId,
+            showDate: row.showDate,
+            movieName: row.movieName, // Include movieName in the result
+          };
+        });
+
+        // Send the list of details as a JavaScript object
+        res.json(details);
+      }
+    );
+  }
+});
+
+module.exports = { fetchScreens, fetchLocations, fetchScreenings };

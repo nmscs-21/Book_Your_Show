@@ -24,7 +24,11 @@ function App() {
           element={<Moviedetails />}
         />
         <Route exact path="/admin" element={<Admin />} />
-        <Route exact path="/buy-tickets" element={<BuyTickets />} />
+        <Route
+          exact
+          path="/:location/movie-details/:movieId/buy-tickets/"
+          element={<BuyTickets />}
+        />
         <Route exact path="/select-seat" element={<SeatSelection />} />
         <Route element={<NotFound />} />
       </Routes>

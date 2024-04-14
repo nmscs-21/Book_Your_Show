@@ -1,34 +1,61 @@
 import React, { useEffect, useState } from "react";
 import FixedBar from "./FixedBar";
 import ScreenCards from "./ScreenCards";
-import { useUser } from "../context/UserContext";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const BuyTickets = () => {
-  const { selectedMovie, selectedMovieId, selectedDate } = useUser();
   const [screens, setScreens] = useState([]);
+  const [dates, setDates] = useState([]);
+  const { movieId, location } = useParams();
 
-  const fetchSreens = async () => {
-    console.log(selectedMovieId);
+  // const fetchSreens = async () => {
+  //   const { data } = await axios.get(`/api/theatres?movieId=${movieId}`);
+
+  //   setScreens(data);
+  //   console.log(data);
+  // };
+
+  const fetchScreenings = async () => {
     const { data } = await axios.get(
-      `/api/theatres?movieId=${selectedMovieId}`
+      `/api/theatres/screenings?movieId=${movieId}&loc=${location}`
     );
-
-    setScreens(data);
     console.log(data);
+
+    // Extract movieName
+    const movieName = data.length > 0 ? data[0].movieName : "";
+
+    // Create a set to store distinct dates
+    const datesSet = new Set();
+    data.forEach((row) => {
+      datesSet.add(row.showDate);
+    });
+
+    // Convert set to array to maintain distinctness
+    const distinctDates = Array.from(datesSet);
+
+    // Parse remaining data as an array of objects
+    const screenings = data.map((row) => {
+      // Omit movieName and showDate
+      const { movieName, showDate, ...rest } = row;
+      return rest; // Return remaining data as an object
+    });
+
+    console.log("Movie Name:", movieName);
+    console.log("Distinct Dates:", distinctDates);
+    console.log("Screenings:", screenings);
   };
 
-  // fetchSreens();
   useEffect(() => {
-    fetchSreens();
-  }, [selectedMovieId]);
+    fetchScreenings();
+  }, []);
 
   return (
     <div style={{ backgroundColor: "#f4f4f4" }}>
       <div>
-        <h2 style={{ paddingLeft: "150px" }}>{selectedMovie}</h2>
+        <h2 style={{ paddingLeft: "150px" }}>{movieId}</h2>
       </div>
-      <FixedBar />
+      <FixedBar dates={movieId} />
 
       <div
         style={{

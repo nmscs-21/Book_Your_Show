@@ -12,20 +12,37 @@ const UserProvider = ({ children }) => {
 
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   try {
+  //     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  //     const locInfo = localStorage.getItem("locInfo");
+  //     setUser(userInfo);
+  //     setLoc(locInfo);
+
+  //     // if (!userInfo) {
+  //     //   navigate("/");
+  //     // }
+  //   } catch (error) {
+  //     console.error("Error in UserProvider useEffect:", error);
+  //   }
+  // }, []);
+
   useEffect(() => {
     try {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-      const locInfo = JSON.parse(localStorage.getItem("locInfo"));
+      const locInfo = localStorage.getItem("locInfo");
       setUser(userInfo);
       setLoc(locInfo);
-
-      // if (!userInfo) {
-      //   navigate("/");
-      // }
+      console.log("culprit-1");
+      // if (locInfo !== undefined && loc === null) setLoc(locInfo);
     } catch (error) {
       console.error("Error in UserProvider useEffect:", error);
     }
   }, []);
+
+  // useEffect(() => {
+  //   localStorage.setItem("locInfo", loc);
+  // }, [loc]);
 
   return (
     <UserContext.Provider
