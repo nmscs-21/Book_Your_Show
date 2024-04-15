@@ -15,7 +15,7 @@ const Reviewcard = ({ username, review }) => {
     >
       <div className="card-body">
         <h4>{username}</h4>
-        <p>{review}</p>
+        <p style={{ whiteSpace: "pre-wrap" }}>{review}</p>
       </div>
     </div>
   );

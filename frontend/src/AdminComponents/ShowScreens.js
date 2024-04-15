@@ -26,7 +26,7 @@ const ShowScreens = () => {
           <tr>
             <th>ScreenId</th>
             <th>Theatre Name</th>
-            <th>LayoutId</th>
+            <th>Theatre Id</th>
           </tr>
         </thead>
         <tbody>
@@ -34,7 +34,7 @@ const ShowScreens = () => {
             <tr key={screen.screenId}>
               <td>{screen.screenId}</td>
               <td>{screen.theatreName}</td>
-              <td>{screen.layoutId}</td>
+              <td>{screen.theatreId}</td>
             </tr>
           ))}
         </tbody>
