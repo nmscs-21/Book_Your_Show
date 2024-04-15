@@ -9,6 +9,7 @@ const Moviedetails = () => {
   const [movie, setMovie] = useState({});
   const [targetModal, setTargetModal] = useState("#login");
   const { user, setSelectedMovie, setSelectedMovieId } = useUser();
+  const [reviews, setreviews] = useState([]);
 
   const giveReview = () => {
     console.log("running");
@@ -23,11 +24,17 @@ const Moviedetails = () => {
     setSelectedMovieId(data[0].movieId);
   };
 
+  const fetchreviews = async () => {
+    const { data } = await axios.get(`/api/movies/${movieId}/reviews`);
+    setreviews(data);
+  };
+
   const { movieId } = useParams();
 
   useEffect(() => {
     fetchMovieData();
     giveReview();
+    fetchreviews();
   }, []);
 
   return (
@@ -150,9 +157,13 @@ const Moviedetails = () => {
           margin: "auto",
         }}
       >
-        <Reviewcard username="user1" review="review1" />
-        <Reviewcard username="user2" review="review2" />
-        <Reviewcard username="user3" review="review3" />
+        {reviews.map((review) => (
+          <Reviewcard
+            key={review.userName}
+            username={review.userName}
+            review={review.review}
+          />
+        ))}
       </div>
     </div>
   );

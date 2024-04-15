@@ -1,6 +1,6 @@
 import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
-import Date from "./DateButton";
+import Date from "./Date";
 import { useUser } from "../context/UserContext";
 import { Link } from "react-router-dom";
 

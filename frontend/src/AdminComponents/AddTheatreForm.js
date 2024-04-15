@@ -1,11 +1,23 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 const AddTheatreForm = () => {
   const [theatreName, setTheatreName] = useState("");
   const [theatreLoc, setTheatreLoc] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    try {
+      const response = await axios.post("/api/theatres", {
+        theatreName,
+        theatreLoc,
+      });
+      console.log(response.data);
+      setTheatreName("");
+      setTheatreLoc("");
+    } catch (error) {
+      console.error("Error adding theatre:", error);
+    }
   };
 
   return (

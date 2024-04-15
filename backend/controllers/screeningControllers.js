@@ -37,7 +37,7 @@ const fetchScreens = asyncHandler(async (req, res) => {
   //   }
   if (!movieId && !date) {
     pool.query(
-      "SELECT s.screenId,t.theatreName,s.layoutId FROM Screens s join Theatre t on s.theatreId=t.theatreId ",
+      "SELECT s.screenId,t.theatreName,t.theatreId FROM Screens s join Theatre t on s.theatreId=t.theatreId ",
       (err, result) => {
         if (err) {
           console.error(err);
@@ -49,7 +49,7 @@ const fetchScreens = asyncHandler(async (req, res) => {
           return {
             screenId: row.screenId,
             theatreName: row.theatreName,
-            layoutId: row.layoutId,
+            theatreId: row.theatreId,
           };
         });
 
@@ -318,9 +318,135 @@ const fetchScreenings = asyncHandler(async (req, res) => {
   }
 });
 
+const addTheatre = asyncHandler(async (req, res) => {
+  const { theatreName, theatreLoc } = req.body;
+
+  await pool.query(
+    "INSERT INTO Theatre (theatreName, theatreLoc) VALUES (?, ?)",
+    [theatreName, theatreLoc],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+      }
+      // Send success response
+      res.status(201).json({
+        message: "Theatre added successfully",
+        theatreId: result.insertId,
+      });
+    }
+  );
+});
+
+const updateTheatre = asyncHandler(async (req, res) => {
+  const { theatreId, theatreName, theatreLoc } = req.body;
+
+  await pool.query(
+    "UPDATE Theatre SET theatreName = ?,theatreLoc = ? WHERE theatreId = ?;",
+    [theatreName, theatreLoc, theatreId],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+      }
+      // Send success response
+      res.status(201).json({
+        message: "Theatre Updated successfully",
+        theatreId: result.insertId,
+      });
+    }
+  );
+});
+
+const deleteTheatre = asyncHandler(async (req, res) => {
+  const { theatreId } = req.body;
+
+  await pool.query(
+    "DELETE FROM Theatre WHERE theatreId = ?",
+    [theatreId],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+      }
+      // Send success response
+      res.status(201).json({
+        message: "Theatre deleted successfully",
+        theatreId: result.insertId,
+      });
+    }
+  );
+});
+
+const addScreen = asyncHandler(async (req, res) => {
+  const { screenId, theatreId } = req.body;
+
+  await pool.query(
+    "INSERT INTO Screens VALUES (?, ?)",
+    [screenId, theatreId],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+      }
+      // Send success response
+      res.status(201).json({
+        message: "Screen added successfully",
+        screenId: result.insertId,
+      });
+    }
+  );
+});
+
+const updateScreen = asyncHandler(async (req, res) => {
+  const { screenId, newscreenId, theatreId } = req.body;
+
+  await pool.query(
+    "UPDATE Screens SET screenId = ? WHERE theatreId = ? and screenId =?;",
+    [newscreenId, theatreId, screenId],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+      }
+      // Send success response
+      res.status(201).json({
+        message: "Screen Updated successfully",
+        screenId: result.insertId,
+      });
+    }
+  );
+});
+
+const deleteScreen = asyncHandler(async (req, res) => {
+  const { screenId, theatreId } = req.body;
+
+  await pool.query(
+    "DELETE FROM Screens WHERE screenId=? and theatreId = ?",
+    [screenId, theatreId],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+      }
+      // Send success response
+      res.status(201).json({
+        message: "Screen deleted successfully",
+        screenId: result.insertId,
+      });
+    }
+  );
+});
+
 module.exports = {
   fetchScreens,
   fetchLocations,
   fetchScreenings,
   fetchDates,
+  addTheatre,
+  updateTheatre,
+  deleteTheatre,
+  addScreen,
+  updateScreen,
+  deleteScreen,
 };
