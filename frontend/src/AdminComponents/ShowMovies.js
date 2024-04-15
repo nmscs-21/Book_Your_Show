@@ -1,43 +1,21 @@
-// ShowMovies.jsx
-
 import React, { useState, useEffect } from "react";
 import AddMovieForm from "./AddMovieForm";
 import UpdateMovieForm from "./UpdateMovieForm";
 import DeleteMovieForm from "./DeleteMovieForm";
+import axios from "axios";
 
 const ShowMovies = () => {
   const [movies, setMovies] = useState([]);
   const [activeForm, setActiveForm] = useState("");
 
+  const fetchMovies = async () => {
+    const { data } = await axios.get(`/api/movies/`);
+    console.log(data);
+    setMovies(data);
+  };
+
   useEffect(() => {
-    // Fetch movies from the database
-    // Example: fetch('/api/movies').then(response => response.json()).then(data => setMovies(data));
-    // Replace the above line with your actual API call to fetch movie data
-    // For demonstration purpose, I'm setting movies manually
-    const fetchedMovies = [
-      {
-        id: 1,
-        name: "Movie 1",
-        duration: "2h",
-        description: "Description 1",
-        releaseDate: "2022-01-01",
-      },
-      {
-        id: 2,
-        name: "Movie 2",
-        duration: "2h30m",
-        description: "Description 2",
-        releaseDate: "2022-01-15",
-      },
-      {
-        id: 3,
-        name: "Movie 3",
-        duration: "1h45m",
-        description: "Description 3",
-        releaseDate: "2022-02-01",
-      },
-    ];
-    setMovies(fetchedMovies);
+    fetchMovies();
   }, []);
 
   return (
@@ -55,11 +33,20 @@ const ShowMovies = () => {
         </thead>
         <tbody>
           {movies.map((movie) => (
-            <tr key={movie.id}>
-              <td>{movie.id}</td>
-              <td>{movie.name}</td>
+            <tr key={movie.movieId}>
+              <td>{movie.movieId}</td>
+              <td>{movie.movieName}</td>
               <td>{movie.duration}</td>
-              <td>{movie.description}</td>
+              <td
+                style={{
+                  maxWidth: "500px",
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {movie.movieDesc}
+              </td>
               <td>{movie.releaseDate}</td>
             </tr>
           ))}

@@ -78,7 +78,7 @@ const LoginForm = () => {
             <input
               type="text"
               className="form-control"
-              id="floatingInput"
+              id="LoginUsername"
               placeholder="Username"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
@@ -88,13 +88,13 @@ const LoginForm = () => {
                 borderRadius: "10px",
               }}
             />
-            <label htmlFor="floatingInput">Username</label>
+            <label htmlFor="LoginUsername">Username</label>
           </div>
           <div className="form-floating" style={{ marginBottom: "30px" }}>
             <input
               type="password"
               className="form-control"
-              id="floatingPassword"
+              id="LoginPassword"
               placeholder="Password"
               value={pwd}
               onChange={(e) => setPwd(e.target.value)}
@@ -104,7 +104,7 @@ const LoginForm = () => {
                 borderRadius: "10px",
               }}
             />
-            <label htmlFor="floatingPassword">Password</label>
+            <label htmlFor="LoginPassword">Password</label>
           </div>
           <div>
             <button

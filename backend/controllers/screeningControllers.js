@@ -35,6 +35,28 @@ const fetchScreens = asyncHandler(async (req, res) => {
   //       }
   //     );
   //   }
+  if (!movieId && !date) {
+    pool.query(
+      "SELECT s.screenId,t.theatreName,s.layoutId FROM Screens s join Theatre t on s.theatreId=t.theatreId ",
+      (err, result) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send("Internal Server Error");
+          return;
+        }
+
+        const screens = result.map((row) => {
+          return {
+            screenId: row.screenId,
+            theatreName: row.theatreName,
+            layoutId: row.layoutId,
+          };
+        });
+
+        res.json(screens);
+      }
+    );
+  }
 
   if (movieId && date) {
     pool.query(
@@ -188,6 +210,28 @@ const fetchScreenings = asyncHandler(async (req, res) => {
   const movieId = req.query.movieId;
   const loc = req.query.loc;
 
+  if (!movieId && !loc) {
+    pool.query("SELECT * FROM Theatre", (err, result) => {
+      if (err) {
+        // Handle error
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      // Map the result to an array of objects
+      const theatres = result.map((row) => {
+        return {
+          theatreId: row.theatreId,
+          theatreName: row.theatreName,
+          theatreLoc: row.theatreLoc,
+        };
+      });
+
+      // Send the list of details as a JavaScript object
+      res.json(theatres);
+    });
+  }
+
   if (movieId && loc) {
     pool.query(
       "SELECT T.theatreId, T.theatreName, SS.screenId, SS.showDate, M.movieName " +
@@ -221,4 +265,8 @@ const fetchScreenings = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { fetchScreens, fetchLocations, fetchScreenings };
+module.exports = {
+  fetchScreens,
+  fetchLocations,
+  fetchScreenings,
+};
