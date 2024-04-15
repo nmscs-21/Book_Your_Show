@@ -14,24 +14,26 @@ import Admin from "./AdminComponents/Admin";
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <Routes>
-        <Route exact path="/" element={<Hompage />} />
-        <Route path="/:location" element={<Hompage />} />
-        <Route
-          exact
-          path="/:location/movie-details/:movieId"
-          element={<Moviedetails />}
-        />
-        <Route exact path="/admin" element={<Admin />} />
-        <Route
-          exact
-          path="/:location/movie-details/:movieId/buy-tickets/"
-          element={<BuyTickets />}
-        />
-        <Route exact path="/select-seat" element={<SeatSelection />} />
-        <Route element={<NotFound />} />
-      </Routes>
+      <div style={{ paddingBottom: "50px" }}>
+        <Navbar />
+        <Routes>
+          <Route exact path="/" element={<Hompage />} />
+          <Route path="/:location" element={<Hompage />} />
+          <Route
+            exact
+            path="/:location/movie-details/:movieId"
+            element={<Moviedetails />}
+          />
+          <Route exact path="/admin" element={<Admin />} />
+          <Route
+            exact
+            path="/:location/movie-details/:movieId/buy-tickets/"
+            element={<BuyTickets />}
+          />
+          <Route exact path="/select-seat" element={<SeatSelection />} />
+          <Route element={<NotFound />} />
+        </Routes>
+      </div>
       <Footer />
     </div>
   );

@@ -2,18 +2,19 @@ import React, { useState, useEffect } from "react";
 import AddTheatreForm from "./AddTheatreForm";
 import UpdateTheatreForm from "./UpdateTheatreForm";
 import DeleteTheatreForm from "./DeleteTheatreForm";
+import axios from "axios";
 
 const ShowTheatres = () => {
   const [theatres, setTheatres] = useState([]);
   const [activeForm, setActiveForm] = useState("");
 
+  const fetchTheatres = async () => {
+    const { data } = await axios.get(`/api/theatres/screenings`);
+    setTheatres(data);
+  };
+
   useEffect(() => {
-    const fetchedTheatres = [
-      { id: 1, name: "Theatre 1", location: "Location 1" },
-      { id: 2, name: "Theatre 2", location: "Location 2" },
-      { id: 3, name: "Theatre 3", location: "Location 3" },
-    ];
-    setTheatres(fetchedTheatres);
+    fetchTheatres();
   }, []);
 
   return (
@@ -29,10 +30,10 @@ const ShowTheatres = () => {
         </thead>
         <tbody>
           {theatres.map((theatre) => (
-            <tr key={theatre.id}>
-              <td>{theatre.id}</td>
-              <td>{theatre.name}</td>
-              <td>{theatre.location}</td>
+            <tr key={theatre.theatreId}>
+              <td>{theatre.theatreId}</td>
+              <td>{theatre.theatreName}</td>
+              <td>{theatre.theatreLoc}</td>
             </tr>
           ))}
         </tbody>

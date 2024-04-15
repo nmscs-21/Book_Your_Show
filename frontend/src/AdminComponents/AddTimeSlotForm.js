@@ -1,5 +1,3 @@
-// AddTimeSlotForm.jsx
-
 import React, { useState, useEffect } from "react";
 
 const AddTimeSlotForm = () => {
@@ -11,10 +9,6 @@ const AddTimeSlotForm = () => {
   const [slot, setSlot] = useState("");
 
   useEffect(() => {
-    // Fetch theatres from the database
-    // Example: fetch('/api/theatres').then(response => response.json()).then(data => setTheatres(data));
-    // Replace the above line with your actual API call to fetch theatre data
-    // For demonstration purpose, I'm setting theatres manually
     const fetchedTheatres = [
       { id: "1", name: "Theatre 1" },
       { id: "2", name: "Theatre 2" },
@@ -24,10 +18,6 @@ const AddTimeSlotForm = () => {
   }, []);
 
   useEffect(() => {
-    // Fetch screens based on selected theatre ID from the database
-    // Example: fetch(`/api/screens?theatreId=${selectedTheatreId}`).then(response => response.json()).then(data => setScreens(data));
-    // Replace the above line with your actual API call to fetch screens data based on selected theatre ID
-    // For demonstration purpose, I'm setting screens manually
     const fetchedScreens = [
       { id: "101", theatreId: "1", name: "Screen 1" },
       { id: "102", theatreId: "1", name: "Screen 2" },
@@ -38,7 +28,6 @@ const AddTimeSlotForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Add logic to submit time slot data to database
   };
 
   return (

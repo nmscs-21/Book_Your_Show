@@ -56,7 +56,7 @@ const SignUpForm = () => {
             <input
               type="text"
               className="form-control"
-              id="floatingInput"
+              id="signupUsername"
               placeholder="Username"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
@@ -66,7 +66,7 @@ const SignUpForm = () => {
                 borderRadius: "10px",
               }}
             />
-            <label htmlFor="floatingInput">Username</label>
+            <label htmlFor="signupUsername">Username</label>
           </div>
           <div className="form-floating mb-3" style={{ marginBottom: "30px" }}>
             <input
@@ -106,7 +106,7 @@ const SignUpForm = () => {
             <input
               type="password"
               className="form-control"
-              id="floatingPassword"
+              id="signupPassword"
               placeholder="Password"
               value={pwd}
               onChange={(e) => setPwd(e.target.value)}
@@ -116,12 +116,12 @@ const SignUpForm = () => {
                 borderRadius: "10px",
               }}
             />
-            <label htmlFor="floatingPassword">Password</label>
+            <label htmlFor="signupPassword">Password</label>
           </div>
           <div>
             <button
               className="btn btn-outline-danger"
-              id="signinsubmit"
+              id="signupsubmit"
               value="Log in"
               onClick={signUpHandler}
             >
