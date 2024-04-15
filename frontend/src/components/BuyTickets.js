@@ -5,57 +5,85 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 const BuyTickets = () => {
+  const [selectedDate, setSelectedDate] = useState(null);
   const [screens, setScreens] = useState([]);
   const [dates, setDates] = useState([]);
+  const [movieName, setMovieName] = useState("");
   const { movieId, location } = useParams();
 
-  // const fetchSreens = async () => {
-  //   const { data } = await axios.get(`/api/theatres?movieId=${movieId}`);
-
-  //   setScreens(data);
-  //   console.log(data);
-  // };
-
   const fetchScreenings = async () => {
+    if (selectedDate) {
+      const { data } = await axios.get(
+        `/api/theatres/screenings?loc=${location}&movieId=${movieId}&date=${selectedDate.fullDate}`
+      );
+      console.log(data);
+    }
+  };
+
+  const fetchDates = async () => {
     const { data } = await axios.get(
-      `/api/theatres/screenings?movieId=${movieId}&loc=${location}`
+      `/api/theatres/dates?movieId=${movieId}&loc=${location}`
     );
     console.log(data);
+    // Extracting only the showDate values and storing them in a new array
+    // Assuming dates is an array of objects with showDate as key
 
-    // Extract movieName
-    const movieName = data.length > 0 ? data[0].movieName : "";
+    // Array of month names
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "July",
+      "Aug",
+      "Sept",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
 
-    // Create a set to store distinct dates
-    const datesSet = new Set();
-    data.forEach((row) => {
-      datesSet.add(row.showDate);
+    // Assuming dates is an array of objects with showDate as key
+    const dateValues = data.map((dateObj) => {
+      // Parse each showDate string into a Date object
+      const date = new Date(dateObj.showDate);
+
+      // Extract the date and month from the Date object
+      const day = date.getDate();
+      const monthIndex = date.getMonth();
+      const month = monthNames[monthIndex]; // Get month name from array
+      const year = date.getFullYear();
+      const fullDate = dateObj.showDate;
+
+      // Return an object with the extracted date and month
+      return { day, month, year, fullDate };
     });
-
-    // Convert set to array to maintain distinctness
-    const distinctDates = Array.from(datesSet);
-
-    // Parse remaining data as an array of objects
-    const screenings = data.map((row) => {
-      // Omit movieName and showDate
-      const { movieName, showDate, ...rest } = row;
-      return rest; // Return remaining data as an object
-    });
-
-    console.log("Movie Name:", movieName);
-    console.log("Distinct Dates:", distinctDates);
-    console.log("Screenings:", screenings);
+    // Setting the dateValues array in the state
+    setDates(dateValues);
+    console.log(dateValues);
+    setSelectedDate(dateValues[0]);
+    console.log(data[0].showDate);
   };
 
   useEffect(() => {
-    fetchScreenings();
+    fetchDates();
   }, []);
+
+  useEffect(() => {
+    fetchScreenings();
+  }, [selectedDate]);
 
   return (
     <div style={{ backgroundColor: "#f4f4f4" }}>
       <div>
-        <h2 style={{ paddingLeft: "150px" }}>{movieId}</h2>
+        <h2 style={{ paddingLeft: "150px" }}>{movieName}</h2>
       </div>
-      <FixedBar dates={movieId} />
+      <FixedBar
+        dates={dates}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+      />
 
       <div
         style={{

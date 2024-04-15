@@ -1,41 +1,37 @@
 import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
-import Date from "./Date";
+import Date from "./DateButton";
 import { useUser } from "../context/UserContext";
 import { Link } from "react-router-dom";
 
-const FixedBar = () => {
-  const { selectedDate, setSelectedDate } = useUser();
-
-  const handleDateSelect = (date) => {
-    setSelectedDate(date);
-  };
-
+const FixedBar = ({ dates, selectedDate, setSelectedDate }) => {
   return (
     <Navbar bg="white" variant="light" sticky="top" style={{ zIndex: "999" }}>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto" style={{ paddingLeft: "150px" }}>
-          <Link to={selectedDate}>
+          {/* {dates.map((date) => (
             <Date
-              date="12"
-              month="Apr"
-              selected={selectedDate === "12"}
-              onSelect={handleDateSelect}
+              date={date.day}
+              month={date.month}
+              selected={date === selectedDate}
+              onSelect={setSelectedDate}
             />
-          </Link>
-          <Date
-            date="13"
-            month="Apr"
-            selected={selectedDate === "13"}
-            onSelect={handleDateSelect}
-          />
-          <Date
-            date="14"
-            month="Apr"
-            selected={selectedDate === "14"}
-            onSelect={handleDateSelect}
-          />
+          ))} */}
+          {dates.map((dateItem) => (
+            <Date
+              key={`${dateItem.day}-${dateItem.month}`}
+              date={dateItem.day}
+              month={dateItem.month}
+              year={dateItem.year}
+              fullDate={dateItem.fullDate}
+              selected={
+                dateItem.day === selectedDate.day &&
+                dateItem.month === selectedDate.month
+              }
+              onSelect={setSelectedDate}
+            />
+          ))}
         </Nav>
       </Navbar.Collapse>
     </Navbar>
