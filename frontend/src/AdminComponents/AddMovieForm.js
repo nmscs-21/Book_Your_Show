@@ -1,13 +1,29 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 const AddMovieForm = () => {
   const [movieName, setMovieName] = useState("");
   const [duration, setDuration] = useState("");
-  const [description, setDescription] = useState("");
+  const [movieDesc, setDescription] = useState("");
   const [releaseDate, setReleaseDate] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    try {
+      const response = await axios.post("/api/movies", {
+        movieName,
+        duration,
+        movieDesc,
+        releaseDate,
+      });
+      console.log(response.data);
+      setMovieName("");
+      setDuration("");
+      setDescription("");
+      setReleaseDate("");
+    } catch (error) {
+      console.error("Error adding movie:", error);
+    }
   };
 
   return (
@@ -39,7 +55,7 @@ const AddMovieForm = () => {
           <textarea
             className="form-control"
             placeholder="Description"
-            value={description}
+            value={movieDesc}
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
