@@ -10,14 +10,6 @@ const FixedBar = ({ dates, selectedDate, setSelectedDate }) => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto" style={{ paddingLeft: "150px" }}>
-          {/* {dates.map((date) => (
-            <Date
-              date={date.day}
-              month={date.month}
-              selected={date === selectedDate}
-              onSelect={setSelectedDate}
-            />
-          ))} */}
           {dates.map((dateItem) => (
             <Date
               key={`${dateItem.day}-${dateItem.month}`}
