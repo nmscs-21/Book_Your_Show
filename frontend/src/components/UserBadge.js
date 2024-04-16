@@ -1,5 +1,5 @@
 import React from "react";
-import Userbadge from "../UserBadge.jpg";
+import Userbadge from "../icons/UserBadge.jpg";
 import "./userbadge.css";
 
 const UserBadge = ({ username }) => {
