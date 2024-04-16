@@ -7,34 +7,6 @@ const fetchScreens = asyncHandler(async (req, res) => {
   const movieId = req.query.movieId;
   const date = req.query.date;
 
-  //   if (!location && !movieId && !date) {
-  //     pool.query(
-  //       "SELECT T.theatreId, T.theatreName, T.theatreLoc, S.screenId " +
-  //         "FROM Theatre T " +
-  //         "INNER JOIN ScreeningSchedule S ON T.theatreId = S.theatreId",
-  //       (err, result, fields) => {
-  //         if (err) {
-  //           // Handle error
-  //           console.error(err);
-  //           res.status(500).send("Internal Server Error");
-  //           return;
-  //         }
-  //         // Map the result to an array of objects
-  //         // console.log(result);
-  //         const details = result.map((row) => {
-  //           return {
-  //             theatreId: row.theatreId,
-  //             theatreName: row.theatreName,
-  //             theatreLoc: row.theatreLoc,
-  //             screenId: row.screenId,
-  //           };
-  //         });
-
-  //         // Send the list of details as a JavaScript object
-  //         res.json(details);
-  //       }
-  //     );
-  //   }
   if (!movieId && !date) {
     pool.query(
       "SELECT s.screenId,t.theatreName,t.theatreId FROM Screens s join Theatre t on s.theatreId=t.theatreId ",
