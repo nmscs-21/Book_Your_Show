@@ -4,40 +4,20 @@ import React, { useState, useEffect } from "react";
 import AddTimeSlotForm from "./AddTimeSlotForm";
 import UpdateTimeSlotForm from "./UpdateTimeSlotForm";
 import DeleteTimeSlotForm from "./DeleteTimeSlotForm";
+import axios from "axios";
 
 const ShowTimeSlots = () => {
   const [timeSlots, setTimeSlots] = useState([]);
   const [activeForm, setActiveForm] = useState("");
 
+  const fetchTimeSlots = async () => {
+    const { data } = await axios.get(`/api/theatres/TimeSlots`);
+    console.log(data);
+    setTimeSlots(data);
+  };
+
   useEffect(() => {
-    // Fetch time slots from the database
-    // Example: fetch('/api/time-slots').then(response => response.json()).then(data => setTimeSlots(data));
-    // Replace the above line with your actual API call to fetch time slot data
-    // For demonstration purpose, I'm setting time slots manually
-    const fetchedTimeSlots = [
-      {
-        id: 1,
-        screenId: 1,
-        theatreId: 1,
-        date: "2022-01-01",
-        slot: "10:00 AM",
-      },
-      {
-        id: 2,
-        screenId: 1,
-        theatreId: 1,
-        date: "2022-01-01",
-        slot: "01:00 PM",
-      },
-      {
-        id: 3,
-        screenId: 2,
-        theatreId: 1,
-        date: "2022-01-02",
-        slot: "12:00 PM",
-      },
-    ];
-    setTimeSlots(fetchedTimeSlots);
+    fetchTimeSlots();
   }, []);
 
   return (
@@ -55,8 +35,8 @@ const ShowTimeSlots = () => {
         </thead>
         <tbody>
           {timeSlots.map((slot) => (
-            <tr key={slot.id}>
-              <td>{slot.id}</td>
+            <tr key={slot.slotId}>
+              <td>{slot.slotId}</td>
               <td>{slot.screenId}</td>
               <td>{slot.theatreId}</td>
               <td>{slot.date}</td>
