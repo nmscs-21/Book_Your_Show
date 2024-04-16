@@ -1,33 +1,29 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const AddTimeSlotForm = () => {
-  const [theatres, setTheatres] = useState([]);
-  const [selectedTheatreId, setSelectedTheatreId] = useState("");
-  const [screens, setScreens] = useState([]);
-  const [selectedScreenId, setSelectedScreenId] = useState("");
+  const [theatreId, settheatreId] = useState("");
+  const [screenId, setscreenId] = useState("");
   const [date, setDate] = useState("");
   const [slot, setSlot] = useState("");
 
-  useEffect(() => {
-    const fetchedTheatres = [
-      { id: "1", name: "Theatre 1" },
-      { id: "2", name: "Theatre 2" },
-      { id: "3", name: "Theatre 3" },
-    ];
-    setTheatres(fetchedTheatres);
-  }, []);
-
-  useEffect(() => {
-    const fetchedScreens = [
-      { id: "101", theatreId: "1", name: "Screen 1" },
-      { id: "102", theatreId: "1", name: "Screen 2" },
-      { id: "103", theatreId: "2", name: "Screen 3" },
-    ].filter((screen) => screen.theatreId === selectedTheatreId);
-    setScreens(fetchedScreens);
-  }, [selectedTheatreId]);
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    try {
+      const response = await axios.post("/api/theatres/TimeSlots", {
+        theatreId,
+        screenId,
+        date,
+        slot,
+      });
+      console.log(response.data);
+      settheatreId("");
+      setscreenId("");
+      setDate("");
+      setSlot("");
+    } catch (error) {
+      console.error("Error adding timeslot:", error);
+    }
   };
 
   return (
@@ -38,32 +34,22 @@ const AddTimeSlotForm = () => {
         style={{ maxWidth: "400px", width: "100%" }}
       >
         <div className="mb-3">
-          <select
-            className="form-select"
-            value={selectedTheatreId}
-            onChange={(e) => setSelectedTheatreId(e.target.value)}
-          >
-            <option value="">Select Theatre</option>
-            {theatres.map((theatre) => (
-              <option key={theatre.id} value={theatre.id}>
-                {theatre.name}
-              </option>
-            ))}
-          </select>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="screen Id"
+            value={screenId}
+            onChange={(e) => setscreenId(e.target.value)}
+          />
         </div>
         <div className="mb-3">
-          <select
-            className="form-select"
-            value={selectedScreenId}
-            onChange={(e) => setSelectedScreenId(e.target.value)}
-          >
-            <option value="">Select Screen</option>
-            {screens.map((screen) => (
-              <option key={screen.id} value={screen.id}>
-                {screen.id}
-              </option>
-            ))}
-          </select>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="theatre Id"
+            value={theatreId}
+            onChange={(e) => settheatreId(e.target.value)}
+          />
         </div>
         <div className="mb-3">
           <input
@@ -90,5 +76,4 @@ const AddTimeSlotForm = () => {
     </div>
   );
 };
-
 export default AddTimeSlotForm;

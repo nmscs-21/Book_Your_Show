@@ -7,34 +7,6 @@ const fetchScreens = asyncHandler(async (req, res) => {
   const movieId = req.query.movieId;
   const date = req.query.date;
 
-  //   if (!location && !movieId && !date) {
-  //     pool.query(
-  //       "SELECT T.theatreId, T.theatreName, T.theatreLoc, S.screenId " +
-  //         "FROM Theatre T " +
-  //         "INNER JOIN ScreeningSchedule S ON T.theatreId = S.theatreId",
-  //       (err, result, fields) => {
-  //         if (err) {
-  //           // Handle error
-  //           console.error(err);
-  //           res.status(500).send("Internal Server Error");
-  //           return;
-  //         }
-  //         // Map the result to an array of objects
-  //         // console.log(result);
-  //         const details = result.map((row) => {
-  //           return {
-  //             theatreId: row.theatreId,
-  //             theatreName: row.theatreName,
-  //             theatreLoc: row.theatreLoc,
-  //             screenId: row.screenId,
-  //           };
-  //         });
-
-  //         // Send the list of details as a JavaScript object
-  //         res.json(details);
-  //       }
-  //     );
-  //   }
   if (!movieId && !date) {
     pool.query(
       "SELECT s.screenId,t.theatreName,t.theatreId FROM Screens s join Theatre t on s.theatreId=t.theatreId ",
@@ -88,67 +60,6 @@ const fetchScreens = asyncHandler(async (req, res) => {
       }
     );
   }
-
-  //   if (location) {
-  //     if (!movieId) {
-  //       pool.query(
-  //         "SELECT T.theatreId, T.theatreName, S.screenId " +
-  //           "FROM Theatre T " +
-  //           "INNER JOIN ScreeningSchedule S ON T.theatreId = S.theatreId " +
-  //           "WHERE T.theatreLoc = ?",
-  //         [location],
-  //         (err, result, fields) => {
-  //           if (err) {
-  //             // Handle error
-  //             console.error(err);
-  //             res.status(500).send("Internal Server Error");
-  //             return;
-  //           }
-  //           // Map the result to an array of objects
-  //           //   console.log(result);
-  //           const details = result.map((row) => {
-  //             return {
-  //               theatreId: row.theatreId,
-  //               theatreName: row.theatreName,
-  //               screenId: row.screenId,
-  //             };
-  //           });
-
-  //           // Send the list of details as a JavaScript object
-  //           res.json(details);
-  //         }
-  //       );
-  //     }
-  //     pool.query(
-  //       "SELECT T.theatreId, T.theatreName, SS.screenId, SS.showDate " +
-  //         "FROM Theatre T " +
-  //         "INNER JOIN ScreeningSchedule SS ON T.theatreId = SS.theatreId " +
-  //         "WHERE T.theatreLoc = ? AND SS.movieId = ?",
-  //       [location, movieId],
-  //       (err, result, fields) => {
-  //         if (err) {
-  //           // Handle error
-  //           console.error(err);
-  //           res.status(500).send("Internal Server Error");
-  //           return;
-  //         }
-  //         // Map the result to an array of objects
-  //         // console.log(result);
-  //         const details = result.map((row) => {
-  //           return {
-  //             theatreId: row.theatreId,
-  //             theatreName: row.theatreName,
-  //             theatreLoc: location,
-  //             screenId: row.screenId,
-  //             showDate: row.showDate,
-  //           };
-  //         });
-
-  //         // Send the list of details as a JavaScript object
-  //         res.json(details);
-  //       }
-  //     );
-  //   }
 
   if (movieId) {
     pool.query(
@@ -438,6 +349,126 @@ const deleteScreen = asyncHandler(async (req, res) => {
   );
 });
 
+const addTimeSlots = asyncHandler(async (req, res) => {
+  const { theatreId, screenId, date, slot } = req.body;
+
+  await pool.query(
+    "INSERT INTO TimeSlots (screenId,theatreId,showDate,slot) VALUES (?, ?, ?, ?)",
+    [screenId, theatreId, date, slot],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+      }
+      // Send success response
+      res.status(201).json({
+        message: "TimeSlot added successfully",
+        slotId: result.insertId,
+      });
+    }
+  );
+});
+
+const updateTimeSlots = asyncHandler(async (req, res) => {
+  const { slotId, screenId, theatreId, date, slot } = req.body;
+
+  await pool.query(
+    "UPDATE TimeSlots SET screenId = ?,theatreId = ?,showDate = ?,slot = ? WHERE slotId = ?;",
+    [screenId, theatreId, date, slot, slotId],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+      }
+      // Send success response
+      res.status(201).json({
+        message: "TimeSlot Updated successfully",
+        slotId: result.insertId,
+      });
+    }
+  );
+});
+
+const deleteTimeSlots = asyncHandler(async (req, res) => {
+  const { slotId } = req.body;
+
+  await pool.query(
+    "DELETE FROM TimeSlots WHERE slotId = ?",
+    [slotId],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+      }
+      // Send success response
+      res.status(201).json({
+        message: "TimeSlot deleted successfully",
+        slotId: result.insertId,
+      });
+    }
+  );
+});
+
+const addScreeningSchedule = asyncHandler(async (req, res) => {
+  const { theatreId, screenId, date, movieId } = req.body;
+
+  await pool.query(
+    "INSERT INTO ScreeningSchedule VALUES (?, ?, ?, ?)",
+    [screenId, theatreId, date, movieId],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+      }
+      // Send success response
+      res.status(201).json({
+        message: "ScreeningSchedule added successfully",
+        ScheduleId: result.insertId,
+      });
+    }
+  );
+});
+
+const updateScreeningSchedule = asyncHandler(async (req, res) => {
+  const { theatreId, screenId, olddate, newdate, movieId } = req.body;
+
+  await pool.query(
+    "UPDATE ScreeningSchedule SET showDate = ? WHERE theatreId = ? and screenId =? and showDate =? and movieId =?;",
+    [newdate, theatreId, screenId, olddate, movieId],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+      }
+      // Send success response
+      res.status(201).json({
+        message: "ScreeningSchedule Updated successfully",
+        ScheduleId: result.insertId,
+      });
+    }
+  );
+});
+
+const deleteScreeningSchedule = asyncHandler(async (req, res) => {
+  const { screenId, theatreId, showDate, movieId } = req.body;
+
+  await pool.query(
+    "DELETE FROM ScreeningSchedule WHERE theatreId= ? and screenId = ? and showDate = ? and movieId= ?",
+    [theatreId, screenId, showDate, movieId],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+      }
+      // Send success response
+      res.status(201).json({
+        message: "ScreeningSchedule deleted successfully",
+        ScheduleId: result.insertId,
+      });
+    }
+  );
+});
+
 const fetchTimeSlots = asyncHandler(async (req, res) => {
   pool.query("SELECT * FROM TimeSlots", (err, result) => {
     if (err) {
@@ -500,6 +531,12 @@ module.exports = {
   addScreen,
   updateScreen,
   deleteScreen,
+  addTimeSlots,
+  updateTimeSlots,
+  deleteTimeSlots,
+  addScreeningSchedule,
+  updateScreeningSchedule,
+  deleteScreeningSchedule,
   fetchTimeSlots,
   fetchScreeningSchedules,
 };

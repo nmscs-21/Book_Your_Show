@@ -26,7 +26,6 @@ const ShowScreeningSchedules = () => {
       <table className="table">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Screen ID</th>
             <th>Theatre ID</th>
             <th>Date</th>
@@ -36,7 +35,6 @@ const ShowScreeningSchedules = () => {
         <tbody>
           {screeningSchedules.map((schedule) => (
             <tr key={schedule.id}>
-              <td>{schedule.id}</td>
               <td>{schedule.screenId}</td>
               <td>{schedule.theatreId}</td>
               <td>{schedule.date}</td>

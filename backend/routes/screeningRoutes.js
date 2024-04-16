@@ -10,6 +10,12 @@ const {
   deleteTheatre,
   updateScreen,
   deleteScreen,
+  addTimeSlots,
+  updateTimeSlots,
+  deleteTimeSlots,
+  addScreeningSchedule,
+  updateScreeningSchedule,
+  deleteScreeningSchedule,
   fetchTimeSlots,
   fetchScreeningSchedules,
 } = require("../controllers/screeningControllers");
@@ -25,7 +31,17 @@ router.route("/locations").get(fetchLocations);
 router.route("/screenings").get(fetchScreenings);
 router.route("/dates").get(fetchDates);
 router.route("/screens").post(addScreen).put(updateScreen).delete(deleteScreen);
-router.route("/TimeSlots").get(fetchTimeSlots);
-router.route("/ScreeningSchedules").get(fetchScreeningSchedules);
+router
+  .route("/TimeSlots")
+  .get(fetchTimeSlots)
+  .post(addTimeSlots)
+  .put(updateTimeSlots)
+  .delete(deleteTimeSlots);
+router
+  .route("/ScreeningSchedules")
+  .get(fetchScreeningSchedules)
+  .post(addScreeningSchedule)
+  .put(updateScreeningSchedule)
+  .delete(deleteScreeningSchedule);
 
 module.exports = router;
