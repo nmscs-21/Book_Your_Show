@@ -265,8 +265,61 @@ const fetchScreenings = asyncHandler(async (req, res) => {
   }
 });
 
+const fetchTimeSlots = asyncHandler(async (req, res) => {
+  pool.query("SELECT * FROM TimeSlots", (err, result) => {
+    if (err) {
+      // Handle error
+      console.error(err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    // Map the result to an array of objects
+    const slots = result.map((row) => {
+      return {
+        slotId: row.slotId,
+        screenId: row.screenId,
+        theatreId: row.theatreId,
+        date: formatString(row.showDate),
+        slot: row.slot,
+      };
+    });
+    res.json(slots);
+  });
+});
+
+const fetchScreeningSchedules = asyncHandler(async (req, res) => {
+  pool.query("SELECT * FROM ScreeningSchedule", (err, result) => {
+    if (err) {
+      // Handle error
+      console.error(err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    // Map the result to an array of objects
+    const details = result.map((row) => {
+      return {
+        screenId: row.screenId,
+        theatreId: row.theatreId,
+        date: formatString(row.showDate),
+        movieId: row.movieId,
+      };
+    });
+    res.json(details);
+  });
+});
+
+const formatString = (string) => {
+  const showDate = new Date(string);
+  const formattedDate = showDate.toLocaleDateString("en-GB"); // 'en-GB' for DD-MM-YYYY format
+  const [day, month, year] = formattedDate.split("/");
+  const dateString = `${day}-${month}-${year}`;
+  return dateString;
+};
+
 module.exports = {
   fetchScreens,
   fetchLocations,
   fetchScreenings,
+  fetchTimeSlots,
+  fetchScreeningSchedules,
 };

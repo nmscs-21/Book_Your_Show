@@ -4,22 +4,20 @@ import React, { useState, useEffect } from "react";
 import AddScreeningScheduleForm from "./AddScreeningScheduleForm";
 import UpdateScreeningScheduleForm from "./UpdateScreeningSchedule";
 import DeleteScreeningScheduleForm from "./DeleteScreeningSchedule";
+import axios from "axios";
 
 const ShowScreeningSchedules = () => {
   const [screeningSchedules, setScreeningSchedules] = useState([]);
   const [activeForm, setActiveForm] = useState("");
 
+  const fetchScreeningSchedules = async () => {
+    const { data } = await axios.get(`/api/theatres/ScreeningSchedules`);
+    console.log(data);
+    setScreeningSchedules(data);
+  };
+
   useEffect(() => {
-    // Fetch screening schedules from the database
-    // Example: fetch('/api/screening-schedules').then(response => response.json()).then(data => setScreeningSchedules(data));
-    // Replace the above line with your actual API call to fetch screening schedule data
-    // For demonstration purpose, I'm setting screening schedules manually
-    const fetchedScreeningSchedules = [
-      { id: 1, screenId: 1, theatreId: 1, date: "2022-01-01", movieId: 1 },
-      { id: 2, screenId: 1, theatreId: 1, date: "2022-01-01", movieId: 2 },
-      { id: 3, screenId: 2, theatreId: 1, date: "2022-01-02", movieId: 3 },
-    ];
-    setScreeningSchedules(fetchedScreeningSchedules);
+    fetchScreeningSchedules();
   }, []);
 
   return (
