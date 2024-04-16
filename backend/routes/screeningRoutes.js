@@ -18,6 +18,7 @@ const {
   deleteScreeningSchedule,
   fetchTimeSlots,
   fetchScreeningSchedules,
+  fetchSlots,
 } = require("../controllers/screeningControllers");
 const router = express.Router();
 
@@ -43,5 +44,7 @@ router
   .post(addScreeningSchedule)
   .put(updateScreeningSchedule)
   .delete(deleteScreeningSchedule);
+
+router.route("/slots").get(fetchSlots);
 
 module.exports = router;

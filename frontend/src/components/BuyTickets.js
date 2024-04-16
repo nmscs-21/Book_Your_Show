@@ -16,7 +16,7 @@ const BuyTickets = () => {
       const { data } = await axios.get(
         `/api/theatres/screenings?loc=${location}&movieId=${movieId}&date=${selectedDate.fullDate}`
       );
-      console.log(data);
+      setScreens(data);
     }
   };
 
@@ -24,7 +24,6 @@ const BuyTickets = () => {
     const { data } = await axios.get(
       `/api/theatres/dates?movieId=${movieId}&loc=${location}`
     );
-    console.log(data);
     // Extracting only the showDate values and storing them in a new array
     // Assuming dates is an array of objects with showDate as key
 
@@ -61,9 +60,7 @@ const BuyTickets = () => {
     });
     // Setting the dateValues array in the state
     setDates(dateValues);
-    console.log(dateValues);
     setSelectedDate(dateValues[0]);
-    console.log(data[0].showDate);
   };
 
   useEffect(() => {
@@ -93,12 +90,10 @@ const BuyTickets = () => {
           paddingBottom: "10px",
         }}
       >
-        <ScreenCards screenName="Screen1" theatreName="MGB" />
-        <ScreenCards screenName="Screen1" theatreName="MGB" />
         {screens.map((screen) => (
           <ScreenCards
             key={[screen.theatreId, screen.screenId, screen.showDate]}
-            screenName={`Screen ${screen.screenId}`}
+            screenId={screen.screenId}
             theatreName={screen.theatreName}
           />
         ))}

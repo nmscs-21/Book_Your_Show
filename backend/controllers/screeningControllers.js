@@ -151,16 +151,22 @@ const fetchScreenings = asyncHandler(async (req, res) => {
   const movieId = req.query.movieId;
   const loc = req.query.loc;
   const date = req.query.date;
-  const formattedDate = new Date(date).toISOString().split("T")[0];
+  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+  const [month, day, year] = formattedDate.split("/");
+
+  // Rearrange the components in the desired format
+  const rearrangedDate = `${year}-${month}-${day}`;
   if (movieId && loc && date) {
     pool.query(
       "SELECT DISTINCT ss.screenId, t.theatreName " +
         "FROM ScreeningSchedule ss " +
         "INNER JOIN Theatre t ON ss.theatreId = t.theatreId " +
-        "INNER JOIN TimeSlots ts ON ss.screenId = ts.screenId AND ss.theatreId = ts.theatreId AND ss.showDate = ts.showDate " +
-        "INNER JOIN Theatre t2 ON ts.theatreId = t2.theatreId " +
         "WHERE t.theatreLoc = ? AND ss.showDate = ? AND ss.movieId = ?",
-      [loc, formattedDate, movieId],
+      [loc, rearrangedDate, movieId],
       (err, result) => {
         if (err) {
           console.error(err);
@@ -227,6 +233,32 @@ const fetchScreenings = asyncHandler(async (req, res) => {
       }
     );
   }
+});
+
+const fetchSlots = asyncHandler(async (req, res) => {
+  const screenId = req.query.screenId;
+  const theatreName = req.query.theatreName;
+  pool.query(
+    "SELECT t.slot FROM TimeSlots t join Theatre th on t.theatreId = th.theatreId where t.screenId=? and th.theatreName=?",
+    [screenId, theatreName],
+    (err, result) => {
+      if (err) {
+        // Handle error
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      // Map the result to an array of objects
+      const details = result.map((row) => {
+        return {
+          slot: row.slot,
+        };
+      });
+
+      // Send the list of details as a JavaScript object
+      res.json(details);
+    }
+  );
 });
 
 const addTheatre = asyncHandler(async (req, res) => {
@@ -539,4 +571,5 @@ module.exports = {
   deleteScreeningSchedule,
   fetchTimeSlots,
   fetchScreeningSchedules,
+  fetchSlots,
 };
