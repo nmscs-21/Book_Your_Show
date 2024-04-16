@@ -1,9 +1,10 @@
 import React from "react";
 
-const Date = ({ date, month, selected, onSelect }) => {
+const Date = ({ date, month, year, fullDate, selected, onSelect }) => {
   const handleClick = () => {
-    onSelect(date);
+    onSelect({ day: date, month, year, fullDate });
   };
+
   return (
     <button
       className={`btn ${selected ? "btn-danger" : ""} me-5`}

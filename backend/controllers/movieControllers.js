@@ -109,6 +109,66 @@ const fetchMovieData = asyncHandler(async (req, res) => {
   );
 });
 
+const addMovie = asyncHandler(async (req, res) => {
+  const { movieName, duration, movieDesc, releaseDate } = req.body;
+
+  await pool.query(
+    "INSERT INTO Movie (movieName,duration,movieDesc,releaseDate) VALUES (?, ?,?,?)",
+    [movieName, duration, movieDesc, releaseDate],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+      }
+      // Send success response
+      res.status(201).json({
+        message: "Movie added successfully",
+        movieId: result.insertId,
+      });
+    }
+  );
+});
+
+const updateMovie = asyncHandler(async (req, res) => {
+  const { movieId, movieName, duration, movieDesc, releaseDate } = req.body;
+
+  await pool.query(
+    "UPDATE Movie SET movieName = ?, duration= ?, movieDesc = ?, releaseDate=? WHERE movieId = ?;",
+    [movieName, duration, movieDesc, releaseDate, movieId],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+      }
+      // Send success response
+      res.status(201).json({
+        message: "Movie Updated successfully",
+        movieId: result.insertId,
+      });
+    }
+  );
+});
+
+const deleteMovie = asyncHandler(async (req, res) => {
+  const { movieId } = req.body;
+
+  await pool.query(
+    "DELETE FROM Movie WHERE movieId = ?",
+    [movieId],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+      }
+      // Send success response
+      res.status(201).json({
+        message: "Movie deleted successfully",
+        movieId: result.insertId,
+      });
+    }
+  );
+});
+
 const formatString = (string) => {
   const releaseDate = new Date(string);
   const formattedDate = releaseDate.toLocaleDateString("en-GB"); // 'en-GB' for DD-MM-YYYY format
@@ -117,4 +177,37 @@ const formatString = (string) => {
   return dateString;
 };
 
-module.exports = { fetchMovies, fetchMovieData };
+const fetchreviews = asyncHandler(async (req, res) => {
+  const movieId = req.params.movieId;
+
+  pool.query(
+    "SELECT u.userName,r.review FROM review r join Users u on r.userId=u.userId WHERE movieId = ?",
+    movieId,
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        console.log(err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+
+      const reviews = result.map((review) => {
+        return {
+          userName: review.userName,
+          review: review.review,
+        };
+      });
+
+      res.json(reviews);
+    }
+  );
+});
+
+module.exports = {
+  fetchMovies,
+  fetchMovieData,
+  addMovie,
+  updateMovie,
+  deleteMovie,
+  fetchreviews,
+};
