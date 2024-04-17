@@ -101,7 +101,7 @@ const fetchDates = asyncHandler(async (req, res) => {
       "FROM ScreeningSchedule " +
       "JOIN Theatre ON ScreeningSchedule.theatreId = Theatre.theatreId " +
       "JOIN Movie ON ScreeningSchedule.movieId = Movie.movieId " +
-      "WHERE Movie.movieId = ? AND Theatre.theatreLoc = ? " +
+      "WHERE Movie.movieId = ? AND Theatre.theatreLoc = ? AND showDate > CURDATE()" +
       "ORDER BY showDate",
     [movieId, loc],
     (err, result, fields) => {

@@ -29,9 +29,23 @@ const SignUpForm = () => {
       // Add a success toast
       console.log("registered");
       localStorage.setItem("userInfo", JSON.stringify(data));
-
+      localStorage.setItem("userRole", "user");
       // setLoading(false);
+      // Modify DOM to show user badge or something
+      navigate("/");
+      // Close the modal
 
+      const closeButton = document.querySelector(".btn-close");
+      if (closeButton) {
+        closeButton.click();
+      }
+
+      setPwd("");
+
+      setUserName("");
+
+      // Reload the page
+      window.location.reload();
       // Close the modal
 
       navigate("/");
@@ -39,6 +53,19 @@ const SignUpForm = () => {
       // Add a failed toast
       console.log(error);
       // setLoading(false);
+
+      navigate("/");
+      // Close the modal
+
+      const closeButton = document.querySelector(".btn-close");
+      if (closeButton) {
+        closeButton.click();
+      }
+      setPwd("");
+      setUserName("");
+      setDob("");
+      setPhNo("");
+      window.location.reload();
     }
   };
   return (

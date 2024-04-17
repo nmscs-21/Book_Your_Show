@@ -27,9 +27,11 @@ const fetchMovies = asyncHandler(async (req, res) => {
     });
   } else {
     pool.query(
-      "SELECT DISTINCT m.movieId, m.movieName FROM Movie m JOIN ScreeningSchedule " +
-        "ss ON m.movieId = ss.movieId JOIN Theatre t ON ss.theatreId = t.theatreId " +
-        "WHERE t.theatreLoc = ?",
+      `SELECT DISTINCT movieId, movieName 
+          FROM ScreeningSchedule 
+          NATURAL JOIN Movie 
+          NATURAL JOIN Theatre 
+          WHERE theatreLoc = ? AND showDate > CURDATE()`,
       [loc],
       (err, result, fields) => {
         if (err) {
