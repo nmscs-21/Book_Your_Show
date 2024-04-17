@@ -4,29 +4,6 @@ const asyncHandler = require("express-async-handler");
 const fetchMovies = asyncHandler(async (req, res) => {
   // Fetch movies from the database
   const loc = req.query.loc;
-  //   if (!loc) {
-  //     pool.query(
-  //       "SELECT movieId, movieName FROM Movie",
-  //       (err, result, fields) => {
-  //         if (err) {
-  //           // Handle error
-  //           console.error(err);
-  //           console.log(err);
-  //           res.status(500).send("Internal Server Error");
-  //           return;
-  //         }
-  //         // Map the result to an array of movie objects
-  //         const movies = result.map((movie) => {
-  //           return {
-  //             movieId: movie.movieId,
-  //             movieName: movie.movieName,
-  //           };
-  //         });
-
-  //         // Send the list of movies as a JavaScript object
-  //         res.json(movies);
-  //       }
-  //     );
 
   if (!loc) {
     pool.query("SELECT * FROM Movie", (err, result, fields) => {
