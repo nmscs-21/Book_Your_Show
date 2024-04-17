@@ -9,6 +9,7 @@ const UserProvider = ({ children }) => {
   const [selectedMovieId, setSelectedMovieId] = useState();
   const [selectedDate, setSelectedDate] = useState();
   const [loc, setLoc] = useState();
+  const [userRole, setUserRole] = useState();
 
   const navigate = useNavigate();
 
@@ -31,8 +32,10 @@ const UserProvider = ({ children }) => {
     try {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
       const locInfo = localStorage.getItem("locInfo");
+      const userRole = localStorage.getItem("userRole");
       setUser(userInfo);
       setLoc(locInfo);
+      setUserRole(userRole);
       // if (locInfo !== undefined && loc === null) setLoc(locInfo);
     } catch (error) {
       console.error("Error in UserProvider useEffect:", error);
@@ -48,6 +51,8 @@ const UserProvider = ({ children }) => {
       value={{
         user,
         setUser,
+        userRole,
+        setUserRole,
         selectedMovie,
         setSelectedMovie,
         selectedMovieId,

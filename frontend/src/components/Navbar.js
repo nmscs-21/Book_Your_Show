@@ -9,7 +9,7 @@ import axios from "axios";
 import { useUser } from "../context/UserContext";
 
 const Navbar = () => {
-  const { loc, setLoc } = useUser();
+  const { userRole, loc, setLoc } = useUser();
   // const [selectedItem, setSelectedItem] = useState("Locations");
   const [locations, setLocations] = useState([]);
 
@@ -37,7 +37,10 @@ const Navbar = () => {
   return (
     <nav className="navbar bg-body-tertiary d-flex justify-content-between align-items-center">
       <Signin />
-      <Link className="navbar-brand p-2 ms-5" to={`/${loc}`}>
+      <Link
+        className="navbar-brand p-2 ms-5"
+        to={userRole !== "admin" ? `/${loc}` : "/admin"}
+      >
         <span
           style={{
             fontFamily: "'Montserrat', sans-serif",
@@ -100,7 +103,7 @@ const Navbar = () => {
             color: "#dc3545",
           }}
         >
-          {loc}
+          {userRole !== "admin" && loc}
         </button>
         <ul className="dropdown-menu">
           {locations.map((location) => (

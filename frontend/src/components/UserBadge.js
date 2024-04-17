@@ -1,10 +1,13 @@
 import React from "react";
 import Userbadge from "../icons/UserBadge.jpg";
 import "./userbadge.css";
+import { useUser } from "../context/UserContext";
 
 const UserBadge = ({ username }) => {
+  const { userRole } = useUser();
   function logoutHandler() {
     localStorage.removeItem("userInfo");
+    localStorage.removeItem("userRole");
     window.location.href = "/";
   }
 
@@ -44,19 +47,24 @@ const UserBadge = ({ username }) => {
         <li>
           <p style={{ textAlign: "center" }}>{username}</p>
         </li>
-        <li>
-          <hr className="dropdown-divider" />
-        </li>
-        <li>
-          <a className="dropdown-item" href="/Booking-table">
-            Booking History
-          </a>
-        </li>
-        <li>
-          <a className="dropdown-item" href="/User-reviews">
-            Reviews
-          </a>
-        </li>
+        {userRole === "user" && (
+          <>
+            <li>
+              <hr className="dropdown-divider" />
+            </li>
+            <li>
+              <a className="dropdown-item" href="/Booking-table">
+                Booking History
+              </a>
+            </li>
+            <li>
+              <a className="dropdown-item" href="/User-reviews">
+                Reviews
+              </a>
+            </li>
+          </>
+        )}
+
         <li>
           <hr className="dropdown-divider" />
         </li>

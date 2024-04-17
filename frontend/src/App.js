@@ -11,8 +11,10 @@ import BuyTickets from "./components/BuyTickets";
 import SeatSelection from "./components/SeatSelection";
 import Admin from "./AdminComponents/Admin";
 import Userreviews from "./components/Userrevies";
+import { useUser } from "./context/UserContext";
 
 function App() {
+  const { userRole } = useUser();
   return (
     <div className="App">
       <div style={{ paddingBottom: "50px" }}>
@@ -40,7 +42,7 @@ function App() {
           <Route element={<NotFound />} />
         </Routes>
       </div>
-      <Footer />
+      {userRole !== "admin" && <Footer />}
     </div>
   );
 }

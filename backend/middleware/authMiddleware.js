@@ -53,3 +53,5 @@ const getUserData = async (decoded) => {
     return null;
   }
 };
+
+module.exports = { protect };

@@ -1,6 +1,66 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const [userName, setUserName] = useState("");
+  const [pwd, setPwd] = useState("");
+
+  const navigate = useNavigate();
+
+  const loginHandler = async (event) => {
+    // setLoading(true); -- for button
+    // Add a toast for missing details
+    event.preventDefault();
+    try {
+      const config = {
+        "Content-Type": "application/json",
+      };
+      const { data } = await axios.post(
+        "/api/admin/login",
+        { userName, pwd },
+        config
+      );
+
+      // Add a success toast
+      console.log("logged in");
+
+      // localStorage.setItem("userInfo", JSON.stringify(data));
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      localStorage.setItem("userRole", "admin");
+      // setLoading(false);
+
+      // Modify DOM to show user badge or something
+      navigate("/admin");
+      // Close the modal
+
+      const closeButton = document.querySelector(".btn-close");
+      if (closeButton) {
+        closeButton.click();
+      }
+
+      setPwd("");
+      setUserName("");
+
+      // Reload the page
+      window.location.reload();
+    } catch (error) {
+      // Add a failed toast
+      console.log(error);
+      navigate("/");
+      // Close the modal
+
+      const closeButton = document.querySelector(".btn-close");
+      if (closeButton) {
+        closeButton.click();
+      }
+      setPwd("");
+      setUserName("");
+
+      // setLoading(false);
+    }
+  };
+
   return (
     <div>
       <footer
@@ -63,17 +123,18 @@ const Footer = () => {
                         style={{ marginBottom: "15px" }}
                       >
                         <input
-                          type="text"
+                          type="number"
                           className="form-control"
                           id="floatinguser"
-                          placeholder="Username"
+                          placeholder="Admin code"
+                          onChange={(e) => setUserName(e.target.value)}
                           required
                           style={{
                             width: "250px",
                             borderRadius: "10px",
                           }}
                         />
-                        <label htmlFor="floatingInput">Username</label>
+                        <label htmlFor="floatingInput">Admin Code</label>
                       </div>
                       <div
                         className="form-floating"
@@ -85,6 +146,7 @@ const Footer = () => {
                           id="floatingpwd"
                           placeholder="Password"
                           required
+                          onChange={(e) => setPwd(e.target.value)}
                           style={{
                             width: "250px",
                             borderRadius: "10px",
@@ -93,11 +155,14 @@ const Footer = () => {
                         <label htmlFor="floatingPassword">Password</label>
                       </div>
                       <div>
-                        <input
-                          type="submit"
+                        <button
                           className="btn btn-outline-danger"
-                          id="adminsubmit"
-                        ></input>
+                          id="signinsubmit"
+                          value="Log in"
+                          onClick={loginHandler}
+                        >
+                          Log in
+                        </button>
                       </div>
                     </div>
                   </form>

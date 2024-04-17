@@ -29,7 +29,7 @@ const LoginForm = () => {
 
       // localStorage.setItem("userInfo", JSON.stringify(data));
       localStorage.setItem("userInfo", JSON.stringify(data));
-
+      localStorage.setItem("userRole", "user");
       // setLoading(false);
 
       // Modify DOM to show user badge or something
