@@ -4,6 +4,7 @@ import ShowScreens from "./ShowScreens";
 import ShowMovies from "./ShowMovies";
 import ShowTimeSlots from "./ShowTimeslots";
 import ShowScreeningSchedules from "./ShowScreeningSchedules";
+import ShowLayout from "./ShowLayout";
 
 const AdminPage = () => {
   const [activeForm, setActiveForm] = useState("");
@@ -46,6 +47,13 @@ const AdminPage = () => {
         >
           Show Screening Schedules
         </button>
+        <button
+          className="btn btn-outline-danger"
+          style={{ margin: "10px" }}
+          onClick={() => setActiveForm("layout")}
+        >
+          Show Layout
+        </button>
       </div>
 
       {activeForm === "theatre" && <ShowTheatres />}
@@ -53,6 +61,7 @@ const AdminPage = () => {
       {activeForm === "movie" && <ShowMovies />}
       {activeForm === "timeslot" && <ShowTimeSlots />}
       {activeForm === "screeningschedule" && <ShowScreeningSchedules />}
+      {activeForm === "layout" && <ShowLayout />}
     </div>
   );
 };

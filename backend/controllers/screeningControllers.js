@@ -266,10 +266,34 @@ const fetchSlots = asyncHandler(async (req, res) => {
 const fetchlayout = asyncHandler(async (req, res) => {
   const theatreId = req.query.theatreId;
   const screenId = req.query.screenId;
-  pool.query(
-    "SELECT l.rows,l.columns,l.divider,l.silvercost,l.goldcost FROM Layout l join Screens s on s.layoutId=l.layoutId where s.theatreId=? and s.screenId=?",
-    [theatreId, screenId],
-    (err, result) => {
+  if (theatreId && screenId) {
+    pool.query(
+      "SELECT l.rows,l.columns,l.divider,l.silvercost,l.goldcost FROM Layout l join Screens s on s.layoutId=l.layoutId where s.theatreId=? and s.screenId=?",
+      [theatreId, screenId],
+      (err, result) => {
+        if (err) {
+          // Handle error
+          console.error(err);
+          res.status(500).send("Internal Server Error");
+          return;
+        }
+        // Map the result to an array of objects
+        const details = result.map((row) => {
+          return {
+            rows: row.rows,
+            columns: row.columns,
+            divider: row.divider,
+            silvercost: row.silvercost,
+            goldcost: row.goldcost,
+          };
+        });
+
+        // Send the list of details as a JavaScript object
+        res.json(details);
+      }
+    );
+  } else if (!theatreId && !screenId) {
+    pool.query("SELECT * FROM Layout", [theatreId, screenId], (err, result) => {
       if (err) {
         // Handle error
         console.error(err);
@@ -279,6 +303,7 @@ const fetchlayout = asyncHandler(async (req, res) => {
       // Map the result to an array of objects
       const details = result.map((row) => {
         return {
+          layoutId: row.layoutId,
           rows: row.rows,
           columns: row.columns,
           divider: row.divider,
@@ -289,8 +314,8 @@ const fetchlayout = asyncHandler(async (req, res) => {
 
       // Send the list of details as a JavaScript object
       res.json(details);
-    }
-  );
+    });
+  }
 });
 
 const addTheatre = asyncHandler(async (req, res) => {
@@ -533,6 +558,66 @@ const deleteScreeningSchedule = asyncHandler(async (req, res) => {
   );
 });
 
+const addlayout = asyncHandler(async (req, res) => {
+  const { rows, columns, divider, silvercost, goldcost } = req.body;
+
+  await pool.query(
+    "INSERT INTO Layout (rows, columns,divider,silvercost,goldcost) VALUES (?, ?,?,?,?)",
+    [rows, columns, divider, silvercost, goldcost],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+      }
+      // Send success response
+      res.status(201).json({
+        message: "layout added successfully",
+        layoutId: result.insertId,
+      });
+    }
+  );
+});
+
+const updatelayout = asyncHandler(async (req, res) => {
+  const { layoutId, rows, columns, divider, silvercost, goldcost } = req.body;
+
+  await pool.query(
+    "UPDATE Layout SET rows = ?,columns = ?,divider=?,silvercost=?,goldcost=? WHERE layoutId = ?;",
+    [rows, columns, divider, silvercost, goldcost, layoutId],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+      }
+      // Send success response
+      res.status(201).json({
+        message: "Layout Updated successfully",
+        layoutId: result.insertId,
+      });
+    }
+  );
+});
+
+const deletelayout = asyncHandler(async (req, res) => {
+  const { layoutId } = req.body;
+
+  await pool.query(
+    "DELETE FROM Layout WHERE layoutId = ?",
+    [layoutId],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+      }
+      // Send success response
+      res.status(201).json({
+        message: "layout deleted successfully",
+        layoutId: result.insertId,
+      });
+    }
+  );
+});
+
 const fetchTimeSlots = asyncHandler(async (req, res) => {
   pool.query("SELECT * FROM TimeSlots", (err, result) => {
     if (err) {
@@ -685,4 +770,7 @@ module.exports = {
   fetchlayout,
   addbooking,
   fetchbooking,
+  addlayout,
+  updatelayout,
+  deletelayout,
 };
