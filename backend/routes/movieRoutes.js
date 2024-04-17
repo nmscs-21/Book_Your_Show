@@ -8,6 +8,7 @@ const {
   fetchreviews,
   fetchuserreviews,
   fetchuserbookings,
+  addreview,
 } = require("../controllers/movieControllers");
 
 const router = express.Router();
@@ -22,4 +23,5 @@ router.route("/:movieId").get(fetchMovieData);
 router.route("/:movieId/reviews").get(fetchreviews);
 router.route("/:userId/userreviews").get(fetchuserreviews);
 router.route("/:userId/userbookings").get(fetchuserbookings);
+router.route("/review").post(addreview);
 module.exports = router;

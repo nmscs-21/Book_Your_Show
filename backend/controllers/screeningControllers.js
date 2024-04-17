@@ -747,6 +747,29 @@ const fetchbooking = asyncHandler(async (req, res) => {
   );
 });
 
+const fetchrevenue = asyncHandler(async (req, res) => {
+  pool.query(
+    "SELECT t.theatreName,r.screenId,r.dt,r.revenue FROM Revenue r join Theatre t on t.theatreId = r.theatreId",
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      const details = result.map((row) => {
+        return {
+          theatreName: row.theatreName,
+          screenId: row.screenId,
+          date: row.dt,
+          revenue: row.revenue,
+        };
+      });
+
+      res.json(details);
+    }
+  );
+});
+
 module.exports = {
   fetchScreens,
   fetchLocations,
@@ -773,4 +796,5 @@ module.exports = {
   addlayout,
   updatelayout,
   deletelayout,
+  fetchrevenue,
 };

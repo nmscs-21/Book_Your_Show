@@ -25,6 +25,7 @@ const {
   addlayout,
   updatelayout,
   deletelayout,
+  fetchrevenue,
 } = require("../controllers/screeningControllers");
 const router = express.Router();
 
@@ -59,5 +60,6 @@ router
   .put(updatelayout)
   .delete(deletelayout);
 router.route("/booking").get(fetchbooking).post(addbooking);
+router.route("/revenue").get(fetchrevenue);
 
 module.exports = router;
