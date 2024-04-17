@@ -238,9 +238,11 @@ const fetchScreenings = asyncHandler(async (req, res) => {
 const fetchSlots = asyncHandler(async (req, res) => {
   const screenId = req.query.screenId;
   const theatreName = req.query.theatreName;
+  const date = req.query.date;
+
   pool.query(
-    "SELECT t.slot FROM TimeSlots t join Theatre th on t.theatreId = th.theatreId where t.screenId=? and th.theatreName=?",
-    [screenId, theatreName],
+    "SELECT t.slot FROM TimeSlots t join Theatre th on t.theatreId = th.theatreId where t.screenId=? and th.theatreName=? and t.showDate=?",
+    [screenId, theatreName, date],
     (err, result) => {
       if (err) {
         // Handle error

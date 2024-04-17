@@ -7,6 +7,7 @@ const {
   deleteMovie,
   fetchreviews,
   fetchuserreviews,
+  fetchuserbookings,
 } = require("../controllers/movieControllers");
 
 const router = express.Router();
@@ -20,4 +21,5 @@ router
 router.route("/:movieId").get(fetchMovieData);
 router.route("/:movieId/reviews").get(fetchreviews);
 router.route("/:userId/userreviews").get(fetchuserreviews);
+router.route("/:userId/userbookings").get(fetchuserbookings);
 module.exports = router;

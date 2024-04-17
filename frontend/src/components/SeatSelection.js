@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import screenicon from "../icons/screen-icon.8dd7f126.svg";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 
 // Seat Component
@@ -43,6 +43,7 @@ const SeatSelection = () => {
   const slot = useParams().slot;
   const { user } = useUser();
   const userId = user ? user.userId : undefined;
+  const navigate = useNavigate();
 
   const formattedDate = new Date(date).toLocaleDateString("en-US", {
     year: "numeric",
@@ -119,6 +120,7 @@ const SeatSelection = () => {
           selectedSeats,
         });
         setSelectedSeats([]);
+        navigate("/Booking-table");
       } catch (error) {
         console.error("Error adding booking:", error);
       }

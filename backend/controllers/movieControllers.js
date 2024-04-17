@@ -206,6 +206,44 @@ const fetchuserreviews = asyncHandler(async (req, res) => {
   );
 });
 
+const fetchuserbookings = asyncHandler(async (req, res) => {
+  const userId = req.params.userId;
+
+  pool.query(
+    "SELECT B.bookingId, T.theatreName ,SS.screenId,SS.showDate,B.time,B.cost,M.movieName,GROUP_CONCAT(BS.seatName ORDER BY BS.seatName SEPARATOR ', ') AS seatNames FROM Theatre T " +
+      "INNER JOIN ScreeningSchedule SS ON T.theatreId = SS.theatreId " +
+      "INNER JOIN Movie M ON SS.movieId = M.movieId " +
+      "INNER JOIN Bookings B ON SS.screenId = B.screenId AND SS.showDate = B.date AND SS.theatreId=B.theatreId " +
+      "INNER JOIN BookedSeats BS ON B.bookingId = BS.bookingId " +
+      "WHERE B.userId = ? " +
+      "GROUP BY B.bookingId,T.theatreName,SS.screenId,SS.showDate,B.time,B.cost,M.movieName;",
+    userId,
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        console.log(err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+
+      const bookings = result.map((booking) => {
+        return {
+          bookingId: booking.bookingId,
+          theatreName: booking.theatreName,
+          screenId: booking.screenId,
+          date: booking.showDate,
+          time: booking.time,
+          cost: booking.cost,
+          movieName: booking.movieName,
+          seats: booking.seatNames,
+        };
+      });
+
+      res.json(bookings);
+    }
+  );
+});
+
 module.exports = {
   fetchMovies,
   fetchMovieData,
@@ -214,4 +252,5 @@ module.exports = {
   deleteMovie,
   fetchreviews,
   fetchuserreviews,
+  fetchuserbookings,
 };
