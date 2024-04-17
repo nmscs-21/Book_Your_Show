@@ -6,9 +6,7 @@ import { useUser } from "../context/UserContext";
 const MovieCard = ({ movieName, movieId }) => {
   const { loc } = useUser();
 
-  const navigateToMovie = () => {
-    console.log(movieId);
-  };
+  const navigateToMovie = () => {};
 
   return (
     <Link

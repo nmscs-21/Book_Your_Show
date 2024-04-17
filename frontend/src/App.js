@@ -10,6 +10,7 @@ import Moviedetails from "./components/Moviedetails";
 import BuyTickets from "./components/BuyTickets";
 import SeatSelection from "./components/SeatSelection";
 import Admin from "./AdminComponents/Admin";
+import Userreviews from "./components/Userrevies";
 
 function App() {
   return (
@@ -30,7 +31,12 @@ function App() {
             path="/:location/movie-details/:movieId/buy-tickets/"
             element={<BuyTickets />}
           />
-          <Route exact path="/select-seat" element={<SeatSelection />} />
+          <Route
+            exact
+            path="/:location/movie-details/:movieId/buy-tickets/:theatreId/:screenId/:date/:slot/select-seat"
+            element={<SeatSelection />}
+          />
+          <Route exact path="/User-reviews" element={<Userreviews />} />
           <Route element={<NotFound />} />
         </Routes>
       </div>

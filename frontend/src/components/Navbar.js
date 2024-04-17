@@ -19,7 +19,6 @@ const Navbar = () => {
   const handleLocClick = (itemName) => {
     setLoc(itemName);
     localStorage.setItem("locInfo", itemName);
-    console.log(itemName);
   };
 
   const getCities = async () => {
@@ -29,7 +28,6 @@ const Navbar = () => {
       setLoc(data[0].theatreLoc);
       localStorage.setItem("locInfo", data[0].theatreLoc);
     }
-    console.log("culprit-0");
   };
 
   useEffect(() => {
@@ -106,7 +104,7 @@ const Navbar = () => {
         </button>
         <ul className="dropdown-menu">
           {locations.map((location) => (
-            <li>
+            <li key={location.theatreLoc}>
               <Link
                 key={location.theatreLoc}
                 className="dropdown-item"
