@@ -203,6 +203,32 @@ const fetchreviews = asyncHandler(async (req, res) => {
   );
 });
 
+const fetchuserreviews = asyncHandler(async (req, res) => {
+  const userId = req.params.userId;
+
+  pool.query(
+    "SELECT r.review,m.movieName FROM review r join Users u on r.userId=u.userId join Movie m on r.movieId=m.movieId WHERE r.userId=?",
+    userId,
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        console.log(err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+
+      const reviews = result.map((review) => {
+        return {
+          movieName: review.movieName,
+          review: review.review,
+        };
+      });
+
+      res.json(reviews);
+    }
+  );
+});
+
 module.exports = {
   fetchMovies,
   fetchMovieData,
@@ -210,4 +236,5 @@ module.exports = {
   updateMovie,
   deleteMovie,
   fetchreviews,
+  fetchuserreviews,
 };

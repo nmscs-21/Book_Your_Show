@@ -11,6 +11,9 @@ const {
   updateScreen,
   deleteScreen,
   fetchSlots,
+  fetchlayout,
+  addbooking,
+  fetchbooking,
 } = require("../controllers/screeningControllers");
 const router = express.Router();
 
@@ -25,5 +28,7 @@ router.route("/screenings").get(fetchScreenings);
 router.route("/dates").get(fetchDates);
 router.route("/screens").post(addScreen).put(updateScreen).delete(deleteScreen);
 router.route("/slots").get(fetchSlots);
+router.route("/layout").get(fetchlayout);
+router.route("/booking").get(fetchbooking).post(addbooking);
 
 module.exports = router;

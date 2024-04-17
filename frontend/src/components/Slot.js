@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Slot = ({ slotTime }) => {
+const Slot = ({ slotTime, screenId, theatreId, date }) => {
   const [hours, minutes, seconds] = slotTime.split(":");
   const parsedTime = new Date();
   parsedTime.setHours(hours, minutes, seconds);
@@ -13,7 +13,7 @@ const Slot = ({ slotTime }) => {
   });
 
   return (
-    <Link to="/select-seat">
+    <Link to={`${theatreId}/${screenId}/${date}/${slotTime}/select-seat`}>
       <button className="btn btn-outline-success disabled me-5" type="button">
         {formattedTime}
       </button>

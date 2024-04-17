@@ -37,7 +37,7 @@ const fetchScreens = asyncHandler(async (req, res) => {
   //   }
   if (!movieId && !date) {
     pool.query(
-      "SELECT s.screenId,t.theatreName,t.theatreId FROM Screens s join Theatre t on s.theatreId=t.theatreId ",
+      "SELECT s.screenId,t.theatreName,t.theatreId,s.layoutId FROM Screens s join Theatre t on s.theatreId=t.theatreId ",
       (err, result) => {
         if (err) {
           console.error(err);
@@ -246,12 +246,11 @@ const fetchScreenings = asyncHandler(async (req, res) => {
     day: "2-digit",
   });
   const [month, day, year] = formattedDate.split("/");
-
-  // Rearrange the components in the desired format
   const rearrangedDate = `${year}-${month}-${day}`;
+
   if (movieId && loc && date) {
     pool.query(
-      "SELECT DISTINCT ss.screenId, t.theatreName " +
+      "SELECT DISTINCT ss.screenId, t.theatreName, t.theatreId " +
         "FROM ScreeningSchedule ss " +
         "INNER JOIN Theatre t ON ss.theatreId = t.theatreId " +
         "WHERE t.theatreLoc = ? AND ss.showDate = ? AND ss.movieId = ?",
@@ -266,6 +265,7 @@ const fetchScreenings = asyncHandler(async (req, res) => {
           return {
             screenId: row.screenId,
             theatreName: row.theatreName,
+            theatreId: row.theatreId,
           };
         });
         res.json(screenings);
@@ -350,6 +350,36 @@ const fetchSlots = asyncHandler(async (req, res) => {
   );
 });
 
+const fetchlayout = asyncHandler(async (req, res) => {
+  const theatreId = req.query.theatreId;
+  const screenId = req.query.screenId;
+  pool.query(
+    "SELECT l.rows,l.columns,l.divider,l.silvercost,l.goldcost FROM Layout l join Screens s on s.layoutId=l.layoutId where s.theatreId=? and s.screenId=?",
+    [theatreId, screenId],
+    (err, result) => {
+      if (err) {
+        // Handle error
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      // Map the result to an array of objects
+      const details = result.map((row) => {
+        return {
+          rows: row.rows,
+          columns: row.columns,
+          divider: row.divider,
+          silvercost: row.silvercost,
+          goldcost: row.goldcost,
+        };
+      });
+
+      // Send the list of details as a JavaScript object
+      res.json(details);
+    }
+  );
+});
+
 const addTheatre = asyncHandler(async (req, res) => {
   const { theatreName, theatreLoc } = req.body;
 
@@ -411,11 +441,11 @@ const deleteTheatre = asyncHandler(async (req, res) => {
 });
 
 const addScreen = asyncHandler(async (req, res) => {
-  const { screenId, theatreId } = req.body;
+  const { screenId, theatreId, layoutId } = req.body;
 
   await pool.query(
-    "INSERT INTO Screens VALUES (?, ?)",
-    [screenId, theatreId],
+    "INSERT INTO Screens VALUES (?, ?, ?)",
+    [screenId, theatreId, layoutId],
     (err, result) => {
       if (err) {
         console.error(err);
@@ -431,11 +461,11 @@ const addScreen = asyncHandler(async (req, res) => {
 });
 
 const updateScreen = asyncHandler(async (req, res) => {
-  const { screenId, newscreenId, theatreId } = req.body;
+  const { screenId, newscreenId, theatreId, layoutId } = req.body;
 
   await pool.query(
-    "UPDATE Screens SET screenId = ? WHERE theatreId = ? and screenId =?;",
-    [newscreenId, theatreId, screenId],
+    "UPDATE Screens SET screenId = ?,layoutId= ? WHERE theatreId = ? and screenId =?;",
+    [newscreenId, layoutId, theatreId, screenId],
     (err, result) => {
       if (err) {
         console.error(err);
@@ -470,6 +500,84 @@ const deleteScreen = asyncHandler(async (req, res) => {
   );
 });
 
+const addbooking = asyncHandler(async (req, res) => {
+  const {
+    userId,
+    theatreId,
+    screenId,
+    rearrangedDate,
+    slot,
+    totalCost,
+    selectedSeats,
+  } = req.body;
+  console.log(
+    userId,
+    theatreId,
+    screenId,
+    rearrangedDate,
+    slot,
+    totalCost,
+    selectedSeats
+  );
+
+  // Insert into Bookings table
+  pool.query(
+    "INSERT INTO Bookings (userId, theatreId, screenId, date, time, cost) VALUES (?, ?, ?, ?, ?, ?)",
+    [userId, theatreId, screenId, rearrangedDate, slot, totalCost],
+    (err, result) => {
+      if (err) {
+        console.error("Error inserting into Bookings:", err);
+        return res.status(500).send("Error inserting into Bookings");
+      }
+
+      const bookingId = result.insertId;
+
+      // Insert seats into BookedSeats table
+      const seatInserts = selectedSeats.map((seat) => [bookingId, seat]);
+
+      pool.query(
+        "INSERT INTO BookedSeats (bookingId, seatName) VALUES ?",
+        [seatInserts],
+        (err) => {
+          if (err) {
+            console.error("Error inserting into BookedSeats:", err);
+            return res.status(500).send("Error inserting into BookedSeats");
+          }
+          res.status(200).send("Booking successful");
+        }
+      );
+    }
+  );
+});
+
+const fetchbooking = asyncHandler(async (req, res) => {
+  const theatreId = req.query.theatreId;
+  const screenId = req.query.screenId;
+  const date = req.query.date;
+  const slot = req.query.slot;
+  pool.query(
+    "SELECT b.seatName FROM BookedSeats b join Bookings bb on b.bookingId=bb.bookingId WHERE bb.theatreId=? and bb.screenId=? and bb.date=? and bb.time=?",
+    [theatreId, screenId, date, slot],
+    (err, result) => {
+      if (err) {
+        // Handle error
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      // Map the result to an array of objects
+      const details = result.map((row) => {
+        return {
+          seats: row.seatName,
+        };
+      });
+
+      // Send the list of details as a JavaScript object
+      res.json(details);
+    }
+  );
+});
+
 module.exports = {
   fetchScreens,
   fetchLocations,
@@ -482,4 +590,7 @@ module.exports = {
   updateScreen,
   deleteScreen,
   fetchSlots,
+  fetchlayout,
+  addbooking,
+  fetchbooking,
 };

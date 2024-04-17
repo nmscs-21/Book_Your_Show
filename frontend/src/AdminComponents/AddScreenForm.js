@@ -4,6 +4,7 @@ import axios from "axios";
 const AddScreenForm = () => {
   const [theatreId, settheatreId] = useState("");
   const [screenId, setscreenId] = useState("");
+  const [layoutId, setlayoutId] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -11,10 +12,12 @@ const AddScreenForm = () => {
       const response = await axios.post("/api/theatres/screens", {
         screenId,
         theatreId,
+        layoutId,
       });
       console.log(response.data);
       setscreenId("");
       settheatreId("");
+      setlayoutId("");
     } catch (error) {
       console.error("Error adding screen:", error);
     }
@@ -43,6 +46,15 @@ const AddScreenForm = () => {
             placeholder="Theatre Id"
             value={theatreId}
             onChange={(e) => settheatreId(e.target.value)}
+          />
+        </div>
+        <div className="mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Layout Id"
+            value={layoutId}
+            onChange={(e) => setlayoutId(e.target.value)}
           />
         </div>
         <div>

@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import Slot from "./Slot";
 import axios from "axios";
 
-const ScreenCards = ({ screenId, theatreName }) => {
+const ScreenCards = ({ screenId, theatreName, theatreId, date }) => {
   const [slots, setSlots] = useState([]);
 
   const fetchSlots = async () => {
     const { data } = await axios.get(
       `/api/theatres/slots?screenId=${screenId}&theatreName=${theatreName}`
     );
-    console.log(data);
     setSlots(data);
   };
 
@@ -34,7 +33,13 @@ const ScreenCards = ({ screenId, theatreName }) => {
         <div className="col-md-8">
           <div className="card-body">
             {slots.map((slot) => (
-              <Slot key={[slot.slotId]} slotTime={slot.slot} />
+              <Slot
+                key={slot.slotId}
+                slotTime={slot.slot}
+                screenId={screenId}
+                theatreId={theatreId}
+                date={date}
+              />
             ))}
           </div>
         </div>

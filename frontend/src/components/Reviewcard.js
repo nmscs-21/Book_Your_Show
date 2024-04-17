@@ -1,7 +1,7 @@
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
-const Reviewcard = ({ username, review }) => {
+const Reviewcard = ({ username, movieName, review }) => {
   return (
     <div
       className="card"
@@ -15,6 +15,7 @@ const Reviewcard = ({ username, review }) => {
     >
       <div className="card-body">
         <h4>{username}</h4>
+        <h4>{movieName}</h4>
         <p style={{ whiteSpace: "pre-wrap" }}>{review}</p>
       </div>
     </div>
