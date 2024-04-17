@@ -9,10 +9,6 @@ const DeleteScreeningScheduleForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(screenId);
-    console.log(theatreId);
-    console.log(showDate);
-    console.log(movieId);
     try {
       const response = await axios.delete(`/api/theatres/ScreeningSchedules`, {
         data: { screenId, theatreId, showDate, movieId },

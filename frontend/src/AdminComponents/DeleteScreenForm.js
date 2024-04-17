@@ -7,7 +7,6 @@ const DeleteScreenForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(theatreId);
     try {
       const response = await axios.delete(`/api/theatres/screens`, {
         data: { screenId, theatreId },

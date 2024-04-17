@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const DeleteTimeSlotForm = () => {
-  const [slotId, setslotId] = useState("");
+const DeleteTheatreForm = () => {
+  const [layoutId, setlayoutId] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.delete(`/api/theatres/TimeSlots`, {
-        data: { slotId },
+      const response = await axios.delete(`/api/theatres/layout`, {
+        data: { layoutId },
       });
-      setslotId("");
+      console.log(response.data);
+      setlayoutId("");
     } catch (error) {
-      console.error("Error deleting timeslot:", error);
+      console.error("Error deleting layout:", error);
     }
   };
 
@@ -27,14 +28,14 @@ const DeleteTimeSlotForm = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Slot Id"
-            value={slotId}
-            onChange={(e) => setslotId(e.target.value)}
+            placeholder="Layout Id"
+            value={layoutId}
+            onChange={(e) => setlayoutId(e.target.value)}
           />
         </div>
         <div>
           <button type="submit" className="btn btn-danger">
-            Delete TimeSlot
+            Delete Layout
           </button>
         </div>
       </form>
@@ -42,4 +43,4 @@ const DeleteTimeSlotForm = () => {
   );
 };
 
-export default DeleteTimeSlotForm;
+export default DeleteTheatreForm;

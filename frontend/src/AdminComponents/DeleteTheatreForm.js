@@ -6,7 +6,6 @@ const DeleteTheatreForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(theatreId);
     try {
       const response = await axios.delete(`/api/theatres`, {
         data: { theatreId },
