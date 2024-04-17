@@ -11,6 +11,7 @@ import BuyTickets from "./components/BuyTickets";
 import SeatSelection from "./components/SeatSelection";
 import Admin from "./AdminComponents/Admin";
 import Userreviews from "./components/Userrevies";
+import Userbookings from "./components/Userbookings";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             element={<SeatSelection />}
           />
           <Route exact path="/User-reviews" element={<Userreviews />} />
+          <Route exact path="/Booking-table" element={<Userbookings />} />
           <Route element={<NotFound />} />
         </Routes>
       </div>

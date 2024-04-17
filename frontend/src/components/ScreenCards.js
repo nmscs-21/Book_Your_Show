@@ -5,9 +5,17 @@ import axios from "axios";
 const ScreenCards = ({ screenId, theatreName, theatreId, date }) => {
   const [slots, setSlots] = useState([]);
 
+  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+  const [month, day, year] = formattedDate.split("/");
+  const rearrangedDate = `${year}-${month}-${day}`;
+
   const fetchSlots = async () => {
     const { data } = await axios.get(
-      `/api/theatres/slots?screenId=${screenId}&theatreName=${theatreName}`
+      `/api/theatres/slots?screenId=${screenId}&theatreName=${theatreName}&date=${rearrangedDate}`
     );
     setSlots(data);
   };
