@@ -8,7 +8,6 @@ const Userreviews = () => {
   const { user } = useUser();
   const fetchreviews = async () => {
     const { data } = await axios.get(`/api/movies/${user.userId}/userreviews`);
-    console.log(data);
     setreviews(data);
   };
 
