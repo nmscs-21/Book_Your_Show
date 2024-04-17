@@ -12,7 +12,6 @@ const Moviedetails = () => {
   const [reviews, setreviews] = useState([]);
 
   const giveReview = () => {
-    console.log("running");
     if (user) setTargetModal("#review");
     else setTargetModal("#login");
   };

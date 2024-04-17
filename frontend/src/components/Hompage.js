@@ -10,11 +10,9 @@ const Hompage = () => {
   const [movies, setMovies] = useState([]);
   const { location } = useParams();
   const { setUser, loc, setLoc } = useUser();
-  console.log(loc);
 
   const fetchMovies = async () => {
     const { data } = await axios.get(`/api/movies/?loc=${loc}`);
-    console.log(data);
     setMovies(data);
   };
 

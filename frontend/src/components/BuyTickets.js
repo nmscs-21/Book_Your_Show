@@ -95,6 +95,8 @@ const BuyTickets = () => {
             key={[screen.theatreId, screen.screenId, screen.showDate]}
             screenId={screen.screenId}
             theatreName={screen.theatreName}
+            theatreId={screen.theatreId}
+            date={selectedDate.fullDate}
           />
         ))}
       </div>

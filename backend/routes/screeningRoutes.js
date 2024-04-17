@@ -19,6 +19,9 @@ const {
   fetchTimeSlots,
   fetchScreeningSchedules,
   fetchSlots,
+  fetchlayout,
+  addbooking,
+  fetchbooking,
 } = require("../controllers/screeningControllers");
 const router = express.Router();
 
@@ -46,5 +49,7 @@ router
   .delete(deleteScreeningSchedule);
 
 router.route("/slots").get(fetchSlots);
+router.route("/layout").get(fetchlayout);
+router.route("/booking").get(fetchbooking).post(addbooking);
 
 module.exports = router;

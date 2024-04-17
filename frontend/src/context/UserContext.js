@@ -33,7 +33,6 @@ const UserProvider = ({ children }) => {
       const locInfo = localStorage.getItem("locInfo");
       setUser(userInfo);
       setLoc(locInfo);
-      console.log("culprit-1");
       // if (locInfo !== undefined && loc === null) setLoc(locInfo);
     } catch (error) {
       console.error("Error in UserProvider useEffect:", error);

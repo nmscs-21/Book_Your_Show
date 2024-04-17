@@ -1,15 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import screenicon from "../icons/screen-icon.8dd7f126.svg";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
 // Seat Component
-const Seat = ({ id, selected, onClick }) => {
+const Seat = ({ id, selected, disabled, onClick }) => {
   return (
     <button
       className={`btn ${
-        selected ? "btn-success" : "btn-outline-success"
+        selected
+          ? "btn-success"
+          : disabled
+          ? "btn-secondary"
+          : "btn-outline-success"
       } me-2 `}
       type="button"
       onClick={() => onClick(id)}
+      disabled={disabled}
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
     >
       {id}
     </button>
@@ -18,13 +31,58 @@ const Seat = ({ id, selected, onClick }) => {
 
 // Seat Selection Component
 const SeatSelection = () => {
-  // Sample seat data
-  const rows = ["A", "B", "C", "D", "E"];
-  const columns = Array.from({ length: 10 }, (_, i) => i + 1);
+  const [rowcount, setrows] = useState();
+  const [columncount, setcolumns] = useState();
+  const [divider, setdivider] = useState();
+  const [silvercost, setsilvercost] = useState();
+  const [goldcost, setgoldcost] = useState();
+  const [bookedSeats, setBookedSeats] = useState([]);
+  const theatreId = useParams().theatreId;
+  const screenId = useParams().screenId;
+  const date = useParams().date;
+  const slot = useParams().slot;
+  const { user } = useUser();
+  const userId = user ? user.userId : undefined;
+
+  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+  const [month, day, year] = formattedDate.split("/");
+  const rearrangedDate = `${year}-${month}-${day}`;
+
+  const fetchSlots = async () => {
+    const { data } = await axios.get(
+      `/api/theatres/layout?theatreId=${theatreId}&screenId=${screenId}`
+    );
+    setrows(data[0].rows);
+    setcolumns(data[0].columns);
+    setdivider(data[0].divider);
+    setsilvercost(data[0].silvercost);
+    setgoldcost(data[0].goldcost);
+  };
+
+  const fetchBookedSeats = async () => {
+    const response = await axios.get(
+      `/api/theatres/booking?theatreId=${theatreId}&screenId=${screenId}&date=${rearrangedDate}&slot=${slot}`
+    );
+    setBookedSeats(response.data);
+  };
+
+  useEffect(() => {
+    fetchSlots();
+    fetchBookedSeats();
+  }, []);
+
+  const rows = Array.from({ length: rowcount }, (_, i) =>
+    String.fromCharCode(65 + i)
+  );
+  const columns = Array.from({ length: columncount }, (_, i) => i + 1);
   const seats = rows.flatMap((row) =>
     columns.map((column) => ({
       id: `${row}${column}`,
-      cost: row.charCodeAt(0) <= 66 ? 100 : 150, // Assign different costs based on row
+      cost: row.charCodeAt(0) >= 64 + divider ? silvercost : goldcost,
     }))
   );
 
@@ -47,6 +105,32 @@ const SeatSelection = () => {
     return acc + seat.cost;
   }, 0);
 
+  const handleclick = async (event) => {
+    event.preventDefault();
+    if (userId) {
+      try {
+        const response = await axios.post("/api/theatres/booking", {
+          userId,
+          theatreId,
+          screenId,
+          rearrangedDate,
+          slot,
+          totalCost,
+          selectedSeats,
+        });
+        setSelectedSeats([]);
+      } catch (error) {
+        console.error("Error adding booking:", error);
+      }
+    } else {
+      console.error("User ID is not present"); // Log an error if userId is not present
+    }
+  };
+  // Function to check if a seat is already booked
+  const isSeatBooked = (id) => {
+    return bookedSeats.some((seat) => seat.seats === id);
+  };
+
   return (
     <div>
       <h2>Select Your Seats</h2>
@@ -54,7 +138,7 @@ const SeatSelection = () => {
         className="seat-map"
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(10, 50px)", // Adjust the column width as needed
+          gridTemplateColumns: `repeat(${columncount}, 50px)`,
           gap: "5px",
           justifyContent: "center",
           alignItems: "center",
@@ -66,6 +150,7 @@ const SeatSelection = () => {
             id={seat.id}
             cost={seat.cost}
             selected={selectedSeats.includes(seat.id)}
+            disabled={isSeatBooked(seat.id)}
             onClick={handleSeatClick}
           />
         ))}
@@ -84,9 +169,43 @@ const SeatSelection = () => {
           style={{ width: "500px", height: "auto", display: "block" }}
         />
       </div>
-      <p>Selected Seats: {selectedSeats.join(", ")}</p>
-      <p>Total Cost: Rs {totalCost}</p>
-      {/* Add a button to proceed to payment */}
+      <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: "50px",
+          }}
+        >
+          <p>Selected Seats: {selectedSeats.join(", ")}</p>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <p>Total Cost: Rs {totalCost}</p>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <button
+            className="btn btn-outline-danger"
+            id="signinsubmit"
+            value="Book Tickets"
+            onClick={handleclick}
+          >
+            Book Tickets
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
