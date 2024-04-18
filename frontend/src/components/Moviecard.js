@@ -16,6 +16,7 @@ const MovieCard = ({ movieName, movieId }) => {
       style={{
         textDecoration: "none",
         width: "200px",
+        height: "280px",
         borderRadius: "8px",
         overflow: "hidden",
         position: "relative",

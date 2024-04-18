@@ -246,6 +246,26 @@ const fetchuserbookings = asyncHandler(async (req, res) => {
   );
 });
 
+const addreview = asyncHandler(async (req, res) => {
+  const { userId, movieId, review } = req.body;
+
+  await pool.query(
+    "INSERT INTO review VALUES (?,?, ?)",
+    [userId, movieId, review],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Internal Server Error");
+      }
+      // Send success response
+      res.status(201).json({
+        message: "Review added successfully",
+        reviewId: result.insertId,
+      });
+    }
+  );
+});
+
 module.exports = {
   fetchMovies,
   fetchMovieData,
@@ -255,4 +275,5 @@ module.exports = {
   fetchreviews,
   fetchuserreviews,
   fetchuserbookings,
+  addreview,
 };

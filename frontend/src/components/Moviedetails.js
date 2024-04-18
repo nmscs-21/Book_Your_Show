@@ -9,7 +9,10 @@ const Moviedetails = () => {
   const [movie, setMovie] = useState({});
   const [targetModal, setTargetModal] = useState("#login");
   const { user, setSelectedMovie, setSelectedMovieId } = useUser();
+  const userId = user ? user.userId : undefined;
   const [reviews, setreviews] = useState([]);
+  const [review, setreview] = useState("");
+  const { movieId } = useParams();
 
   const giveReview = () => {
     if (user) setTargetModal("#review");
@@ -28,7 +31,22 @@ const Moviedetails = () => {
     setreviews(data);
   };
 
-  const { movieId } = useParams();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      if (user) {
+        const response = await axios.post("/api/movies/review", {
+          userId,
+          movieId,
+          review,
+        });
+        setreview("");
+        console.log(response.data);
+      }
+    } catch (error) {
+      console.error("Error adding review:", error);
+    }
+  };
 
   useEffect(() => {
     fetchMovieData();
@@ -109,12 +127,14 @@ const Moviedetails = () => {
                         ></button>
                       </div>
                       <div className="modal-body">
-                        <form>
+                        <form onSubmit={handleSubmit}>
                           <div className="mb-3">
                             <textarea
                               className="form-control"
                               id="reviewbox"
                               placeholder="write a review"
+                              value={review}
+                              onChange={(e) => setreview(e.target.value)}
                               style={{ height: "150px" }}
                             />
                           </div>
