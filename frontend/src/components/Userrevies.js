@@ -17,24 +17,32 @@ const Userreviews = () => {
 
   return (
     <div
-      className="card"
       style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        width: "500px",
       }}
     >
-      {reviews &&
-        reviews.map((review) => (
-          <Reviewcard
-            key={review.review}
-            review={review.review}
-            movieName={review.movieName}
-          >
-            <h1>Loading...</h1>
-          </Reviewcard>
-        ))}
+      <div
+        className="card"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "500px",
+        }}
+      >
+        {reviews &&
+          reviews.map((review) => (
+            <Reviewcard
+              key={review.review}
+              review={review.review}
+              movieName={review.movieName}
+            >
+              <h1>Loading...</h1>
+            </Reviewcard>
+          ))}
+      </div>
     </div>
   );
 };
