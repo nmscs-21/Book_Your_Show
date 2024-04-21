@@ -125,6 +125,8 @@ const SeatSelection = () => {
         console.error("Error adding booking:", error);
       }
     } else {
+      alert("User ID is not present");
+      setSelectedSeats([]);
       console.error("User ID is not present"); // Log an error if userId is not present
     }
   };
