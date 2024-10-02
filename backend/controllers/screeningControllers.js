@@ -22,6 +22,7 @@ const fetchScreens = asyncHandler(async (req, res) => {
             screenId: row.screenId,
             theatreName: row.theatreName,
             theatreId: row.theatreId,
+            layoutId: row.layoutId,
           };
         });
 

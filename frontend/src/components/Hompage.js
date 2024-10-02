@@ -13,6 +13,7 @@ const Hompage = () => {
 
   const fetchMovies = async () => {
     const { data } = await axios.get(`/api/movies/?loc=${loc}`);
+    console.log(data);
     setMovies(data);
   };
 
@@ -21,11 +22,9 @@ const Hompage = () => {
   }, [setUser, loc]);
 
   useEffect(() => {
-    // Check if loc parameter is available in the URL
     if (location) {
       console.log(location);
-      // Add validation logic here...
-      setLoc(location); // Set loc state based on URL parameter
+      setLoc(location);
       localStorage.setItem("locInfo", location);
     }
   }, [location]);

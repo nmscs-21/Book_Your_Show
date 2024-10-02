@@ -18,7 +18,7 @@ function App() {
   const { userRole } = useUser();
   return (
     <div className="App">
-      <div style={{ paddingBottom: "50px" }}>
+      <div style={{ minHeight: `calc(100vh - 50px)`, paddingBottom: "50px" }}>
         <Navbar />
         <Routes>
           <Route exact path="/" element={<Hompage />} />

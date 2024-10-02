@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import "./Moviecard.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import AuthComponent from "./AuthComponent";
 import Signin from "./SignIn";
