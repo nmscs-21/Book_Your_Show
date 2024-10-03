@@ -123,10 +123,10 @@ const Footer = () => {
                         style={{ marginBottom: "15px" }}
                       >
                         <input
-                          type="number"
+                          type="text"
                           className="form-control"
                           id="floatinguser"
-                          placeholder="Admin code"
+                          placeholder="Admin Id"
                           onChange={(e) => setUserName(e.target.value)}
                           required
                           style={{
@@ -134,7 +134,7 @@ const Footer = () => {
                             borderRadius: "10px",
                           }}
                         />
-                        <label htmlFor="floatingInput">Admin Code</label>
+                        <label htmlFor="floatingInput">Admin Id</label>
                       </div>
                       <div
                         className="form-floating"

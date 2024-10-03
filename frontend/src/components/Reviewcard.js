@@ -8,13 +8,13 @@ const Reviewcard = ({ username, movieName, review }) => {
       style={{
         flex: "0 0 auto",
         width: "400px",
-        marginRight: "10px",
+        marginRight: "20px",
         backgroundColor: "#ffffff",
         padding: "10px",
       }}
     >
       <div className="card-body">
-        <h4>{username}</h4>
+        <h3>{username}</h3>
         <h4>{movieName}</h4>
         <p style={{ whiteSpace: "pre-wrap" }}>{review}</p>
       </div>

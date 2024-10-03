@@ -162,7 +162,10 @@ const Moviedetails = () => {
           </div>
         </div>
       </div>
-      <div className="card" style={{ paddingLeft: "140px" }}>
+      <div
+        className="card"
+        style={{ margin: "30px 140px", padding: "10px", border: "none" }}
+      >
         <h3>About the Movie</h3>
         <div className="card-body">{movie.movieDesc}</div>
       </div>
